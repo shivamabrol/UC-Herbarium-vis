@@ -63,13 +63,14 @@ class LeafletMap {
     vis.Dots = vis.svg.selectAll('circle')
                     .data(vis.data) 
                     .join('circle')
-                    .attr("fill", d=>vis.colorScale(d.year))                         .attr("stroke", "black")
+                    .attr("fill", d=>vis.colorScale(d.year))                         
+                    .attr("stroke", "black")
                         //Leaflet has to take control of projecting points. Here we are feeding the latitude and longitude coordinates to
                         //leaflet so that it can project them on the coordinates of the view. Notice, we have to reverse lat and lon.
                         //Finally, the returned conversion produces an x and y point. We have to select the the desired one using .x or .y
                         .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
                         .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y) 
-                        .attr("r", 3)
+                        .attr("r", 6)
                         .on('mouseover', function(event,d) { //function to add mouseover event
                             d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                               .duration('150') //how long we are transitioning between the two states (works like keyframes)
