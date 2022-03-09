@@ -156,10 +156,23 @@ class LeafletMap {
     // }
    
    //redraw based on new zoom- need to recalculate on-screen position
+
+   let color = document.getElementById('colors').value
+
     vis.Dots
       .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
       .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
-      .attr("fill", d=>vis.colorScale(d.year)) 
+      .attr("fill", function(d) {
+        if(color == 'year') {
+          
+          return vis.colorScale(d.year);
+        }
+        if(color == 'startDayofYear') {
+          return vis.colorScale(d.startDayOfYear)
+        }
+        if(color == 'class') {
+          return vis.colorScale(d.class)
+        }})
       .attr("r", vis.radiusSize) ;
 
   }

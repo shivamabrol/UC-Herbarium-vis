@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <label for="colorby">Color by parameter:</label>
+    <!--color by year
+    color by startDayOfYear- how far into the year was this collected
+    color by class (there are 8 classes in the Fungi collection)
+    design explanation:  describe the colors you selected for these options and why you selected them, referencing whether the data is nominal, ordinal, quantitative, etc. and whether the color scheme is monochromatic, diverging, or categorical.   -->
+        <select name="color" id="colors" onchange="configureDropDownLists(this,document.getElementById('secondDropdown'))">
+          <option value="year">Year</option>
+          <option value="startDayofYear">Start Day of Year</option>
+          <option value="class">class</option>
+        </select>
     <div id="my-map"></div>
     
     <script src="js/d3.v6.min.js"></script>
@@ -18,16 +29,7 @@
 
     <div id="tooltip"></div>
 
-    <label for="colorby">Color by parameter:</label>
-<!--color by year
-color by startDayOfYear- how far into the year was this collected
-color by class (there are 8 classes in the Fungi collection)
-design explanation:  describe the colors you selected for these options and why you selected them, referencing whether the data is nominal, ordinal, quantitative, etc. and whether the color scheme is monochromatic, diverging, or categorical.   -->
-    <select name="color" id="colors" onchange="configureDropDownLists(this,document.getElementById('secondDropdown'))">
-      <option value="year">Year</option>
-      <option value="startDayofYear">Start Day of Year</option>
-      <option value="class">class</option>
-    </select>
+
 
 </body>
 </html>
