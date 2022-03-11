@@ -35,7 +35,10 @@ class BarChart {
         //     .range([vis.height, 0])
         //     .nice();
         //     console.log(vis.yScale);
+        //vis.yScale = d3.scaleLinear().range([vis.height-25, 0])
+        //move y axis up for room for labels
         vis.yScale = d3.scaleLinear().range([vis.height, 0])
+
             .domain([0, d3.max(vis.data, function (d) { return d.y; })]);
 
 
@@ -47,21 +50,36 @@ class BarChart {
 
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+
         vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis')
             .call(vis.yAxis);
 
-        vis.xAxisG = vis.chart.append('g')
-            .attr('class', 'axis x-axis')
-            .attr('transform', `translate(0,${vis.height})`)
-            .call(vis.xAxis);
+        // vis.xAxisG = vis.chart.append('g')
+        //     .attr('class', 'axis x-axis')
+        //     .attr('transform', `translate(0,${vis.height})`)
+        //     //.attr("transform", "rotate(-90)")
+        //     .call(vis.xAxis);
 
-        vis.updateVis();
+        vis.chart.append("g")
+        .attr("class", "axis")
+    .attr("transform", "translate(0," + vis.height+ ")")
+    .call(d3.axisBottom(vis.xScale))
+            .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-1em")
+            .attr("dy", "-0.5em")
+            .attr("transform", "rotate(-25)")
+            //.attr('transform', `translate(0,${vis.height})`)
+            vis.updateVis();
     }
 
     updateVis() {
 
+
         let vis = this
+
+        
         vis.chart.selectAll('.bar')
             .data(vis.data)
             .enter()
