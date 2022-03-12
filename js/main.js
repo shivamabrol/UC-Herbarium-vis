@@ -125,15 +125,15 @@ d3.csv('data/data-sample2.csv')//updted the data
       .style("font-size", "20px")
       .text('Specimins collected over the course of a year');
 
-    // keysAll = [];
-    // data.forEach(d => {
-    //     //console.log(d);
-    //     keysAll.push(d.class)});
-    // function onlyUnique(value, index, self) {
-    //     return self.indexOf(value) === index;
-    // }
-    // keys = keysAll.filter(onlyUnique);
-    //console.log(keys);
+    keysAll = [];
+    data.forEach(d => {
+        //console.log(d);
+        keysAll.push(d.class)});
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+    keys = keysAll.filter(onlyUnique);
+    console.log(keys);
     let Myxomycetes = 0;
     let Sordariomycetes = 0;
     let Agaricomycetes = 0;
@@ -257,10 +257,11 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 600
     }, classs);
+    
     barClasss.svg.append("text")
       // .attr("class", "y 5abel")
       .attr("text-anchor", "middle")
-      .attr("x", (barClasss.width / 2) + 100
+      .attr("x", (barClasss.width / 2) + 50
       )
       .attr("y", 350)
       .text('specimens');
@@ -277,58 +278,85 @@ d3.csv('data/data-sample2.csv')//updted the data
       .style("font-size", "20px")
       .text('number of specimens in each class');
 
-    keysAll = [];
+    keysAll1 = [];
     data.forEach(d => {
       //console.log(d);
-      keysAll.push(d.recordedBy)
+      keysAll1.push(d.recordedBy)
     });
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
-    keys = keysAll.filter(onlyUnique);
-    console.log(keys);
+    keys1 = keysAll1.filter(onlyUnique);
+    //console.log(keys);
     // Initialize chart and then show it
     let redorder = [];
-    for (let i = 0; i < keys.length; i++) {
-     // console.log(keys[i]);
+    for (let i = 0; i < keys1.length; i++) {
+      // console.log(keys[i]);
       let count = 0;
       data.forEach(d => {
-        
+
         //console.log(d.recordedBy);
-        if (keys[i] == d.recordedBy) {
+        if (keys1[i] == d.recordedBy) {
           count += 1;
         }
       });
-      //console.log(count);
-      count!=0?redorder.push({ 'y': keys[i], 'x': count }): count=count;
+
+      if (redorder.length < 10) {
+        redorder.push({ 'x': keys1[i], 'y': count })
+        //console.log(count);
+
+      } else {
+        let miin = 100000;
+        let index = 0;
+        for (let k = 0; k < redorder.length; k++) {
+          if (miin > redorder[k].x) {
+            miin = redorder[k].x;
+            index = k;
+          }
+        }
+        if (miin < count) {
+          redorder.splice(index, 1)
+          redorder.push({ 'x': keys1[i], 'y': count })
+
+        }
+      }
+
     }
-    barRecordedBy = new HorzBarChart({
+
+    barRecordedBy = new BarChart({
       'parentElement': '#barChart3',
-      'containerHeight': 3500,
-      'containerWidth': 1200
+      'containerHeight': 350,
+      'containerWidth': 600
     }, redorder);
     console.log(redorder);
 
     barRecordedBy.svg.append("text")
       // .attr("class", "y 5abel")
       .attr("text-anchor", "middle")
-      .attr("x", (barRecordedBy.width / 2) + 100
-      )
+      .attr("x", (barRecordedBy.width / 2) + 50)
       .attr("y", 350)
-      .text('specimens');
+      .text('Recorded by');
     barRecordedBy.svg.append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -(barRecordedBy.height / 2))
       .attr("y", 15)
       .style("text-anchor", "middle")
-      .text('count of specimens collected');
+      .text('number of specimens in each person collected');
     barRecordedBy.svg.append("text")
       .attr("x", barRecordedBy.width / 2 + 50)
       .attr("y", 15)
       .attr("text-anchor", "middle")
       .style("font-size", "20px")
-      .text('number of specimens in each class');
+      .text('top 10 recoders of evidence');
 
+
+
+
+
+
+
+
+      
     //initial coloring by year because it's the first field in the dropdown
     //can be changed
     leafletMap = new LeafletMap({

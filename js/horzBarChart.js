@@ -30,15 +30,8 @@ class HorzBarChart {
             .domain(vis.data.map(function(d) { return d.y; }))
             .paddingInner(0.2)
             .paddingOuter(0.2);
-        // vis.yScale = d3.scaleLinear()
-        //     .domain([0, d3.max(vis.data, vis.yValue)])
-        //     .range([vis.height, 0])
-        //     .nice();
-        //     console.log(vis.yScale);
-        //vis.yScale = d3.scaleLinear().range([vis.height-25, 0])
-        //move y axis up for room for labels
+       
         vis.xScale = d3.scaleLinear().range([vis.width, 0])
-
             .domain([ d3.max(vis.data, function (d) { return d.x; }), 0]);
 
 
