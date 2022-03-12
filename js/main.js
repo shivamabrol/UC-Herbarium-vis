@@ -9,7 +9,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       // if (d.month == "null") {
       //   d.month = '0';
       // }
-     // d.month = +d.month;
+      // d.month = +d.month;
       if (d.decimalLatitude == "null" || d.decimalLongitude == "null" || d.year == "null") {
         d.latitude = 99999999999999;
         d.longitude = 99999999999999;
@@ -106,9 +106,9 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerWidth': 600
     }, timeYear);
     barTimeYear.svg.append("text")
-     // .attr("class", "y label")
+      // .attr("class", "y label")
       .attr("text-anchor", "middle")
-      .attr("x", (barTimeYear.width / 2)+30
+      .attr("x", (barTimeYear.width / 2) + 30
       )
       .attr("y", 350)
       .text('months');
@@ -119,21 +119,21 @@ d3.csv('data/data-sample2.csv')//updted the data
       .style("text-anchor", "middle")
       .text('count of speciminse collected');
     barTimeYear.svg.append("text")
-      .attr("x", barTimeYear.width / 2+50)
+      .attr("x", barTimeYear.width / 2 + 50)
       .attr("y", 15)
       .attr("text-anchor", "middle")
       .style("font-size", "20px")
       .text('Specimins collected over the course of a year');
 
-      keysAll = [];
-      data.forEach(d => {
-          //console.log(d);
-          keysAll.push(d.class)});
-      function onlyUnique(value, index, self) {
-          return self.indexOf(value) === index;
-      }
-      keys = keysAll.filter(onlyUnique);
-console.log(keys);
+    // keysAll = [];
+    // data.forEach(d => {
+    //     //console.log(d);
+    //     keysAll.push(d.class)});
+    // function onlyUnique(value, index, self) {
+    //     return self.indexOf(value) === index;
+    // }
+    // keys = keysAll.filter(onlyUnique);
+    //console.log(keys);
     let Myxomycetes = 0;
     let Sordariomycetes = 0;
     let Agaricomycetes = 0;
@@ -143,16 +143,16 @@ console.log(keys);
     let Pucciniomycetes = 0;
     let Dothideomycetes = 0;
     let Myxogastrea = 0;
-     let Pezizomycetes = 0;
-     let Leotiomycetes = 0;
-     let Chytridiomycetes = 0;
-     let Oomycetes = 0;
+    let Pezizomycetes = 0;
+    let Leotiomycetes = 0;
+    let Chytridiomycetes = 0;
+    let Oomycetes = 0;
     let Lecanoromycetes = 0;
-     let Blastocladiomycetes = 0;
-     let Eurotiomycetes = 0;
-     let Orbiliomycetes = 0;
-     let Dacrymycetes = 0;
-     let Lichinomycetes = 0;
+    let Blastocladiomycetes = 0;
+    let Eurotiomycetes = 0;
+    let Orbiliomycetes = 0;
+    let Dacrymycetes = 0;
+    let Lichinomycetes = 0;
     let Exobasidiomycetes = 0;
     let unknown1 = 0;
 
@@ -183,41 +183,41 @@ console.log(keys);
         case 'Pezizomycetes':
           Pezizomycetes = Pezizomycetes + 1;
           break;
-          case 'Dothideomycetes':
-            Dothideomycetes = Dothideomycetes + 1;
-            break;
-            case 'Myxogastrea':
-              Myxogastrea = Myxogastrea + 1;
+        case 'Dothideomycetes':
+          Dothideomycetes = Dothideomycetes + 1;
           break;
-          case 'Leotiomycetes':
-            Leotiomycetes = Leotiomycetes + 1;
+        case 'Myxogastrea':
+          Myxogastrea = Myxogastrea + 1;
           break;
-          case 'Chytridiomycetes':
-            Chytridiomycetes = Chytridiomycetes + 1;
+        case 'Leotiomycetes':
+          Leotiomycetes = Leotiomycetes + 1;
           break;
-          case 'Oomycetes':
-            Oomycetes = Oomycetes + 1;
+        case 'Chytridiomycetes':
+          Chytridiomycetes = Chytridiomycetes + 1;
           break;
-          case 'Lecanoromycetes':
-            Lecanoromycetes = Lecanoromycetes + 1;
+        case 'Oomycetes':
+          Oomycetes = Oomycetes + 1;
           break;
-          case 'Blastocladiomycetes':
-            Blastocladiomycetes = Blastocladiomycetes + 1;
+        case 'Lecanoromycetes':
+          Lecanoromycetes = Lecanoromycetes + 1;
           break;
-          case 'Eurotiomycetes':
-            Eurotiomycetes = Eurotiomycetes + 1;
+        case 'Blastocladiomycetes':
+          Blastocladiomycetes = Blastocladiomycetes + 1;
           break;
-          case 'Orbiliomycetes':
-            Orbiliomycetes = Orbiliomycetes + 1;
+        case 'Eurotiomycetes':
+          Eurotiomycetes = Eurotiomycetes + 1;
           break;
-          case 'Dacrymycetes':
-            Dacrymycetes = Dacrymycetes + 1;
+        case 'Orbiliomycetes':
+          Orbiliomycetes = Orbiliomycetes + 1;
           break;
-          case 'Lichinomycetes':
-            Lichinomycetes = Lichinomycetes + 1;
+        case 'Dacrymycetes':
+          Dacrymycetes = Dacrymycetes + 1;
           break;
-          case 'Exobasidiomycetes':
-            Exobasidiomycetes = Exobasidiomycetes + 1;
+        case 'Lichinomycetes':
+          Lichinomycetes = Lichinomycetes + 1;
+          break;
+        case 'Exobasidiomycetes':
+          Exobasidiomycetes = Exobasidiomycetes + 1;
           break;
         case "":
           //console.log(d.month);
@@ -230,54 +230,104 @@ console.log(keys);
       }
     });
     //console.log(unk)
-    Myxomycetes!=0 ? classs.push({ 'x': "Myxomycetes", 'y': Myxomycetes }): Myxomycetes=Myxomycetes;
-    Sordariomycetes!=0 ? classs.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes }): Sordariomycetes=Sordariomycetes;
-    Agaricomycetes!=0 ? classs.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes }): Agaricomycetes=Agaricomycetes;
-    Ustilaginomycetes!=0 ? classs.push({ 'x': "Ustilaginomycetes", 'y': Ustilaginomycetes }): Ustilaginomycetes=Ustilaginomycetes;
-    Tremellomycetes!=0 ? classs.push({ 'x': "Tremellomycetes", 'y': Tremellomycetes }): Tremellomycetes=Tremellomycetes;
-    Taphrinomycetes!=0 ? classs.push({ 'x': "Taphrinomycetes", 'y': Taphrinomycetes }): Taphrinomycetes=Taphrinomycetes;
-    Pucciniomycetes!=0 ? classs.push({ 'x': "Pucciniomycetes", 'y': Pucciniomycetes }): Pucciniomycetes=Pucciniomycetes;
-    Pezizomycetes!=0 ? classs.push({ 'x': "Pezizomycetes", 'y': Pezizomycetes }): Pezizomycetes=Pezizomycetes;
-    Dothideomycetes!=0 ? classs.push({ 'x': "Dothideomycetes", 'y': Dothideomycetes }): Dothideomycetes=Dothideomycetes;
-    Myxogastrea!=0 ? classs.push({ 'x': "Myxogastrea", 'y': Myxogastrea }): Myxogastrea=Myxogastrea;
-    Leotiomycetes!=0 ? classs.push({ 'x': "Leotiomycetes", 'y': Leotiomycetes }): Leotiomycetes=Leotiomycetes;
-    Chytridiomycetes!=0 ? classs.push({ 'x': "Chytridiomycetes", 'y': Chytridiomycetes }): Chytridiomycetes=Chytridiomycetes;
-    Oomycetes!=0 ? classs.push({ 'x': "Oomycetes", 'y': Oomycetes }): Oomycetes=Oomycetes;
-    Lecanoromycetes!=0 ? classs.push({ 'x': "Lecanoromycetes", 'y': Lecanoromycetes }): Lecanoromycetes=Lecanoromycetes;
-    Blastocladiomycetes!=0 ? classs.push({ 'x': "Blastocladiomycetes", 'y': Blastocladiomycetes }): Blastocladiomycetes=Blastocladiomycetes;
-    Eurotiomycetes!=0 ? classs.push({ 'x': "Eurotiomycetes", 'y': Eurotiomycetes }): Eurotiomycetes=Eurotiomycetes;
-    Orbiliomycetes!=0 ? classs.push({ 'x': "Orbiliomycetes", 'y': Orbiliomycetes }): Orbiliomycetes=Orbiliomycetes;
-    Dacrymycetes!=0 ? classs.push({ 'x': "Dacrymycetes", 'y': Dacrymycetes }): Dacrymycetes=Dacrymycetes;
-    Lichinomycetes!=0 ? classs.push({ 'x': "Lichinomycetes", 'y': Lichinomycetes }): Lichinomycetes=Lichinomycetes;
-    Exobasidiomycetes!=0 ? classs.push({ 'x': "Exobasidiomycetes", 'y': Exobasidiomycetes }): Exobasidiomycetes=Exobasidiomycetes;
-    unknown1!=0 ? classs.push({ 'x': "unknown", 'y': unknown1 }): unknown1=unknown1;
+    Myxomycetes != 0 ? classs.push({ 'x': "Myxomycetes", 'y': Myxomycetes }) : Myxomycetes = Myxomycetes;
+    Sordariomycetes != 0 ? classs.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes }) : Sordariomycetes = Sordariomycetes;
+    Agaricomycetes != 0 ? classs.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes }) : Agaricomycetes = Agaricomycetes;
+    Ustilaginomycetes != 0 ? classs.push({ 'x': "Ustilaginomycetes", 'y': Ustilaginomycetes }) : Ustilaginomycetes = Ustilaginomycetes;
+    Tremellomycetes != 0 ? classs.push({ 'x': "Tremellomycetes", 'y': Tremellomycetes }) : Tremellomycetes = Tremellomycetes;
+    Taphrinomycetes != 0 ? classs.push({ 'x': "Taphrinomycetes", 'y': Taphrinomycetes }) : Taphrinomycetes = Taphrinomycetes;
+    Pucciniomycetes != 0 ? classs.push({ 'x': "Pucciniomycetes", 'y': Pucciniomycetes }) : Pucciniomycetes = Pucciniomycetes;
+    Pezizomycetes != 0 ? classs.push({ 'x': "Pezizomycetes", 'y': Pezizomycetes }) : Pezizomycetes = Pezizomycetes;
+    Dothideomycetes != 0 ? classs.push({ 'x': "Dothideomycetes", 'y': Dothideomycetes }) : Dothideomycetes = Dothideomycetes;
+    Myxogastrea != 0 ? classs.push({ 'x': "Myxogastrea", 'y': Myxogastrea }) : Myxogastrea = Myxogastrea;
+    Leotiomycetes != 0 ? classs.push({ 'x': "Leotiomycetes", 'y': Leotiomycetes }) : Leotiomycetes = Leotiomycetes;
+    Chytridiomycetes != 0 ? classs.push({ 'x': "Chytridiomycetes", 'y': Chytridiomycetes }) : Chytridiomycetes = Chytridiomycetes;
+    Oomycetes != 0 ? classs.push({ 'x': "Oomycetes", 'y': Oomycetes }) : Oomycetes = Oomycetes;
+    Lecanoromycetes != 0 ? classs.push({ 'x': "Lecanoromycetes", 'y': Lecanoromycetes }) : Lecanoromycetes = Lecanoromycetes;
+    Blastocladiomycetes != 0 ? classs.push({ 'x': "Blastocladiomycetes", 'y': Blastocladiomycetes }) : Blastocladiomycetes = Blastocladiomycetes;
+    Eurotiomycetes != 0 ? classs.push({ 'x': "Eurotiomycetes", 'y': Eurotiomycetes }) : Eurotiomycetes = Eurotiomycetes;
+    Orbiliomycetes != 0 ? classs.push({ 'x': "Orbiliomycetes", 'y': Orbiliomycetes }) : Orbiliomycetes = Orbiliomycetes;
+    Dacrymycetes != 0 ? classs.push({ 'x': "Dacrymycetes", 'y': Dacrymycetes }) : Dacrymycetes = Dacrymycetes;
+    Lichinomycetes != 0 ? classs.push({ 'x': "Lichinomycetes", 'y': Lichinomycetes }) : Lichinomycetes = Lichinomycetes;
+    Exobasidiomycetes != 0 ? classs.push({ 'x': "Exobasidiomycetes", 'y': Exobasidiomycetes }) : Exobasidiomycetes = Exobasidiomycetes;
+    unknown1 != 0 ? classs.push({ 'x': "unknown", 'y': unknown1 }) : unknown1 = unknown1;
 
-    barClasss= new BarChart({
+    barClasss = new BarChart({
       'parentElement': '#barChart2',
       'containerHeight': 350,
       'containerWidth': 600
     }, classs);
     barClasss.svg.append("text")
-     // .attr("class", "y 5abel")
+      // .attr("class", "y 5abel")
       .attr("text-anchor", "middle")
-      .attr("x", (barClasss.width / 2)+100
+      .attr("x", (barClasss.width / 2) + 100
       )
-      .attr("y", 300)
+      .attr("y", 350)
       .text('specimens');
-      barClasss.svg.append("text")
+    barClasss.svg.append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -(barClasss.height / 2))
       .attr("y", 15)
       .style("text-anchor", "middle")
       .text('count of specimens collected');
-      barClasss.svg.append("text")
-      .attr("x", barClasss.width / 2+50)
+    barClasss.svg.append("text")
+      .attr("x", barClasss.width / 2 + 50)
       .attr("y", 15)
       .attr("text-anchor", "middle")
       .style("font-size", "20px")
       .text('number of specimens in each class');
-      
+
+    keysAll = [];
+    data.forEach(d => {
+      //console.log(d);
+      keysAll.push(d.recordedBy)
+    });
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+    keys = keysAll.filter(onlyUnique);
+    console.log(keys);
     // Initialize chart and then show it
+    let redorder = [];
+    for (let i = 0; i < keys.length; i++) {
+     // console.log(keys[i]);
+      let count = 0;
+      data.forEach(d => {
+        
+        //console.log(d.recordedBy);
+        if (keys[i] == d.recordedBy) {
+          count += 1;
+        }
+      });
+      //console.log(count);
+      count!=0?redorder.push({ 'y': keys[i], 'x': count }): count=count;
+    }
+    barRecordedBy = new HorzBarChart({
+      'parentElement': '#barChart3',
+      'containerHeight': 3500,
+      'containerWidth': 1200
+    }, redorder);
+    console.log(redorder);
+
+    barRecordedBy.svg.append("text")
+      // .attr("class", "y 5abel")
+      .attr("text-anchor", "middle")
+      .attr("x", (barRecordedBy.width / 2) + 100
+      )
+      .attr("y", 350)
+      .text('specimens');
+    barRecordedBy.svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -(barRecordedBy.height / 2))
+      .attr("y", 15)
+      .style("text-anchor", "middle")
+      .text('count of specimens collected');
+    barRecordedBy.svg.append("text")
+      .attr("x", barRecordedBy.width / 2 + 50)
+      .attr("y", 15)
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .text('number of specimens in each class');
 
     //initial coloring by year because it's the first field in the dropdown
     //can be changed
@@ -285,11 +335,8 @@ console.log(keys);
       parentElement: '#my-map',
       colorBy: 'year'
     }, data);
-
   })
   .catch(error => console.error(error));
-
-
 
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
@@ -310,8 +357,6 @@ function configureDropDownLists(ddl1, ddl2) {
       //all the updates are done in the renderVis function to ensure that 
       //the map is not reinitialized in initVis.
       leafletMap.renderVis(ddl1.value);
-
-
     })
 
 

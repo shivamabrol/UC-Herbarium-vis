@@ -1,4 +1,4 @@
-class BarChart {
+class HorzBarChart {
     constructor(_config, _data) {
         this.config = {
             parentElement: _config.parentElement,
@@ -24,10 +24,10 @@ class BarChart {
         vis.yValue = d => d.y;
         vis.tp = '#tooltip';
 
-        vis.xScale = d3
+        vis.yScale = d3
             .scaleBand()
-            .range([0, vis.width])
-            .domain(vis.data.map(function (d) { return d.x; }))
+            .range([0, vis.height])
+            .domain(vis.data.map(function(d) { return d.y; }))
             .paddingInner(0.2)
             .paddingOuter(0.2);
         // vis.yScale = d3.scaleLinear()
@@ -37,12 +37,12 @@ class BarChart {
         //     console.log(vis.yScale);
         //vis.yScale = d3.scaleLinear().range([vis.height-25, 0])
         //move y axis up for room for labels
-        vis.yScale = d3.scaleLinear().range([vis.height, 0])
+        vis.xScale = d3.scaleLinear().range([vis.width, 0])
 
-            .domain([0, d3.max(vis.data, function (d) { return d.y; })]);
+            .domain([ d3.max(vis.data, function (d) { return d.x; }), 0]);
 
 
-        vis.xAxis = d3.axisTop(vis.xScale);
+        vis.xAxis = d3.axisBottom(vis.xScale);
         vis.yAxis = d3.axisLeft(vis.yScale);
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
@@ -55,23 +55,14 @@ class BarChart {
             .attr('class', 'axis y-axis')
             .call(vis.yAxis);
 
-        // vis.xAxisG = vis.chart.append('g')
-        //     .attr('class', 'axis x-axis')
-        //     .attr('transform', `translate(0,${vis.height})`)
-        //     //.attr("transform", "rotate(-90)")
-        //     .call(vis.xAxis);
+        vis.xAxisG = vis.chart.append('g')
+            .attr('class', 'axis x-axis')
+            .attr('transform', `translate(0,${vis.height})`)
+            //.attr("transform", "rotate(-90)")
+            .call(vis.xAxis);
 
-        vis.chart.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + vis.height + ")")
-            .call(d3.axisBottom(vis.xScale))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-1em")
-            .attr("dy", "-0.5em")
-            .attr("transform", "rotate(90)")
-        //.attr('transform', `translate(0,${vis.height})`)
-        vis.updateVis();
+        
+            vis.updateVis();
     }
 
     updateVis() {
@@ -79,29 +70,18 @@ class BarChart {
 
         let vis = this
 
-
+        
         vis.chart.selectAll('.bar')
             .data(vis.data)
             .enter()
             .append('rect')
             //.attr('fill', d3.color('blue'))
-            .attr("class", "bar")
+           .attr("class", "bar")
             .attr('fill', d3.color('blue'))
-            .attr('x', (s) => vis.xScale(s.x))
+            .attr('x', vis.xScale(0))
             .attr('y', (s) => vis.yScale(s.y))
-            //.attr('height', 200)
-            .attr('height', (s) => vis.height - vis.yScale(s.y))
-            .attr('width', vis.xScale.bandwidth());
-            vis.chart.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + vis.height + ")")
-            .call(d3.axisBottom(vis.xScale))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-1em")
-            .attr("dy", "-0.5em")
-            .attr("transform", "rotate(90)")
+            .attr('width', (s) => vis.xScale(s.x) )
+            .attr('height', vis.yScale.bandwidth());
     }
-    
 
 }
