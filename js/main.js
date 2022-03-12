@@ -127,10 +127,11 @@ d3.csv('data/data-sample2.csv')//updted the data
 
     keysAll = [];
     data.forEach(d => {
-        //console.log(d);
-        keysAll.push(d.class)});
+      //console.log(d);
+      keysAll.push(d.class)
+    });
     function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
+      return self.indexOf(value) === index;
     }
     keys = keysAll.filter(onlyUnique);
     console.log(keys);
@@ -257,7 +258,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 600
     }, classs);
-    
+
     barClasss.svg.append("text")
       // .attr("class", "y 5abel")
       .attr("text-anchor", "middle")
@@ -349,14 +350,65 @@ d3.csv('data/data-sample2.csv')//updted the data
       .style("font-size", "20px")
       .text('top 10 recoders of evidence');
 
+    let withCoords = [];
+    let yes = 0;
+    let no = 0;
+    data.forEach(d => {
+
+      if (d.decimalLatitude == "" || d.decimalLongitude == "") {
+        no += 1;
+      }
+      else {
+        yes += 1;
+      }
+    });
+    withCoords.push({ 'key': 'Yes', 'value': yes })
+    withCoords.push({ 'key': 'No', 'value': no })
+
+
+    pieCoords = new PieChart({
+      'parentElement': '#pieChart1',
+      'containerHeight': 350,
+      'containerWidth': 350
+    }, withCoords);
+    pieCoords.svg.append("text")
+      .attr("x", pieCoords.width / 2)
+      .attr("y", 15)
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .text('Do they have coordinates?');
+
+    let withEventDate = [];
+    let yes1 = 0;
+    let no1 = 0;
+    data.forEach(d => {
+
+      if (d.eventDate == "" ) {
+        no1 += 1;
+      }
+      else {
+        yes1 += 1;
+      }
+    });
+    withEventDate.push({ 'key': 'Yes', 'value': yes1 })
+    withEventDate.push({ 'key': 'No', 'value': no1 })
+
+
+    pieEvent = new PieChart({
+      'parentElement': '#pieChart2',
+      'containerHeight': 350,
+      'containerWidth': 350
+    }, withCoords);
+    pieEvent.svg.append("text")
+      .attr("x", pieEvent.width / 2)
+      .attr("y", 15)
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .text('Do they have event dates?');
 
 
 
 
-
-
-
-      
     //initial coloring by year because it's the first field in the dropdown
     //can be changed
     leafletMap = new LeafletMap({
