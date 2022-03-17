@@ -105,6 +105,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 600
     }, timeYear);
+    barTimeYear.tp = "#tooltipBarChart1";
     barTimeYear.svg.append("text")
       // .attr("class", "y label")
       .attr("text-anchor", "middle")
@@ -258,7 +259,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 600
     }, classs);
-
+    barClasss.tp = "#tooltipBarChart2";
     barClasss.svg.append("text")
       // .attr("class", "y 5abel")
       .attr("text-anchor", "middle")
@@ -330,6 +331,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerWidth': 600
     }, redorder);
     console.log(redorder);
+    barRecordedBy.tp = "#tooltipBarChart3";
 
     barRecordedBy.svg.append("text")
       // .attr("class", "y 5abel")
@@ -371,6 +373,8 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 350
     }, withCoords);
+    pieCoords.tp = "#tooltipPieChart1";
+
     pieCoords.svg.append("text")
       .attr("x", pieCoords.width / 2)
       .attr("y", 15)
@@ -399,6 +403,7 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 350
     }, withCoords);
+    pieEvent.tp = "#tooltipPieChart2";
     pieEvent.svg.append("text")
       .attr("x", pieEvent.width / 2)
       .attr("y", 15)
@@ -415,9 +420,29 @@ d3.csv('data/data-sample2.csv')//updted the data
       parentElement: '#my-map',
       colorBy: 'year'
     }, data);
+
+    let focusContextVis = new FocusContextVis({ parentElement: '#chart'}, data);
+        focusContextVis.updateVis();
   })
   .catch(error => console.error(error));
 
+  function yearChange() {
+
+
+    d3.csv('data/data-sample2.csv')
+    .then(data => {
+      var node = document.getElementById('values');
+      let years = node.innerHTML.split(',')
+  
+  
+      // console.log(data)
+  
+      let dd = document.getElementById('colors').value
+      leafletMap.renderVis(years, dd);
+  
+    });
+    
+  }
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
 

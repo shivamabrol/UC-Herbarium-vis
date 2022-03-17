@@ -100,13 +100,15 @@ class PieChart {
             .style("opacity", 0.7)
             .on('mouseover', (event,d) => {
                 console.log("mouse over! ");
-                console.log(event);
+               // console.log(event);
                 console.log(d);
   
               d3.select(vis.tp)
                 .style('display', 'block')
-                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+               // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+               // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+               .style('left', (event.screenX) + 'px') 
+               .style('top', (event.screenY) + 'px')
                 .html(`
                   <div class="tooltip-title">Key: ${d.data.key}</div>
                   <ul>

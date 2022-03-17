@@ -22,7 +22,7 @@ class BarChart {
 
         vis.xValue = d => d.x;
         vis.yValue = d => d.y;
-        vis.tp = '#tooltip';
+        vis.tp = '#tooltipBarChart1';
 
         vis.xScale = d3
             .scaleBand()
@@ -91,7 +91,29 @@ class BarChart {
             .attr('y', (s) => vis.yScale(s.y))
             //.attr('height', 200)
             .attr('height', (s) => vis.height - vis.yScale(s.y))
-            .attr('width', vis.xScale.bandwidth());
+            .attr('width', vis.xScale.bandwidth())
+            .on('mouseover', (event,d) => {
+                console.log("mouse over! ");
+                //console.log(event);
+                console.log(d);
+  
+              d3.select(vis.tp)
+                .style('display', 'block')
+               // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+               // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+               .style('left', (event.screenX) + 'px') 
+               .style('top', (event.screenY) + 'px')
+                .html(`
+                  <div class="tooltip-title">Key: ${d.x}</div>
+                  <ul>
+                    <li> Value: ${d.y}</li>
+
+                  </ul>
+                `);
+            })
+            .on('mouseleave', () => {
+              d3.select(vis.tp).style('display', 'none');
+            });
             vis.chart.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(0," + vis.height + ")")

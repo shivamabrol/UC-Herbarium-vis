@@ -9,12 +9,20 @@
 </head>
 <body>
 
+    <div id="tooltipBarChart1"></div>
+    <div id="tooltipBarChart2"></div>
     <svg id="barChart1"></svg>
     <svg id="barChart2"></svg>
+
+    <div id="tooltipBarChart3"></div>
+    <div id="tooltipPieChart1"></div>
+    <div id="tooltipPieChart2"></div>
     <svg id="barChart3"></svg>
     <svg id="pieChart1"></svg>
     <svg id="pieChart2"></svg>
 
+
+    <p id="years" onchange="yearChange()"></p>
 
     <label for="colorby">Color by parameter:</label>
     <!--color by year
@@ -37,6 +45,7 @@
     <script src="js/barChart.js"></script>
     <script src="js/horzBarChart.js"></script>
     <script src="js/pieChart.js"></script>
+    <script src="js/focusContextVis.js"></script>
 
 
     <div id="tooltip"></div>

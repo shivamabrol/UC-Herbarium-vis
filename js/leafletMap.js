@@ -177,30 +177,34 @@ class LeafletMap {
 
   }
 
-
-  renderVis(color) {
+  renderVis(param, color) {
     let vis = this;
 
-    //not using right now... 
+    let data = vis.data;
+    // var svg = d3.select("svg.leaflet-zoom-animated");
+    // svg.selectAll("*").remove();
+    // vis.data =  vis.data.filter(d => d.year != 'null');
+    if(param.length > 0) {
+      data =  data.filter(d => d.year >= param[0]);
+      data =  data.filter(d => d.year >= param[1]);  
+    }
 
-
-    let year_null = vis.data.filter(d => d.year != 'null'),
-    class_null = vis.data.filter(d => d.class != 'null'),
-    startDay_null = vis.data.filter(d => d.startDayOfYear != 'null');
+    // class_null = vis.data.filter(d => d.class != 'null'),
+    // startDay_null = vis.data.filter(d => d.startDayOfYear != 'null');
     switch (color) {
       case 'year':
         vis.colorScale = d3.scaleSequential()
         .interpolator(d3.interpolateViridis);
-        let minYear = d3.min(year_null, d => d.year),
-        maxYear = d3.max(year_null, d => d.year);
+        // let minYear = d3.min(year_null, d => d.year),
+        // maxYear = d3.max(year_null, d => d.year);
         //years are lexicographically increasing so no need to hardcode
-      vis.colorScale.domain([minYear,maxYear]); 
+      vis.colorScale.domain([1850,2017]); 
         break;
       case 'startDayofYear':
         vis.colorScale = d3.scaleSequential()
         .interpolator(d3.interpolateViridis);
-        let firstStartDay = d3.min(startDay_null, d => d.startDayOfYear)
-        , lastStartDay = d3.max(startDay_null, d => d.startDayOfYear)
+        // let firstStartDay = d3.min(startDay_null, d => d.startDayOfYear)
+        // , lastStartDay = d3.max(startDay_null, d => d.startDayOfYear)
         // 364 string is less than 99 so hardcoded these
         vis.colorScale.domain([1, 365]); 
         break;
@@ -217,7 +221,7 @@ class LeafletMap {
 
     //these are the city locations, displayed as a set of dots 
     vis.Dots = vis.svg.selectAll('circle')
-                    .data(vis.data) 
+                    .data(data) 
                     .join('circle')
                     .attr("fill", function(d) {
                       if(color == 'year') {
