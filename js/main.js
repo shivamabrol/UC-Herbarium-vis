@@ -387,7 +387,7 @@ d3.csv('data/data-sample2.csv')//updted the data
     let no1 = 0;
     data.forEach(d => {
 
-      if (d.eventDate == "" ) {
+      if (d.eventDate == "") {
         no1 += 1;
       }
       else {
@@ -421,28 +421,30 @@ d3.csv('data/data-sample2.csv')//updted the data
       colorBy: 'year'
     }, data);
 
-    let focusContextVis = new FocusContextVis({ parentElement: '#chart'}, data);
-        focusContextVis.updateVis();
+    let focusContextVis = new FocusContextVis({ parentElement: '#chart' }, data);
+    focusContextVis.updateVis();
   })
+
+  
   .catch(error => console.error(error));
 
-  function yearChange() {
+function yearChange() {
 
 
-    d3.csv('data/data-sample2.csv')
+  d3.csv('data/data-sample2.csv')
     .then(data => {
       var node = document.getElementById('values');
       let years = node.innerHTML.split(',')
-  
-  
+
+
       // console.log(data)
-  
+
       let dd = document.getElementById('colors').value
       leafletMap.renderVis(years, dd);
-  
+
     });
-    
-  }
+
+}
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
 
@@ -461,7 +463,7 @@ function configureDropDownLists(ddl1, ddl2) {
 
       //all the updates are done in the renderVis function to ensure that 
       //the map is not reinitialized in initVis.
-      leafletMap.renderVis(ddl1.value);
+      leafletMap.renderVis([], ddl1.value);
     })
 
 
