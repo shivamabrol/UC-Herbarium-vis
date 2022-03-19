@@ -421,8 +421,10 @@ d3.csv('data/data-sample2.csv')//updted the data
       colorBy: 'year'
     }, data);
 
-    let focusContextVis = new FocusContextVis({ parentElement: '#chart' }, data);
+    let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data);
     focusContextVis.updateVis();
+    let focusContextVis2 = new FocusContextVis({ parentElement: '#chart_days', limits: '0, 365' }, data);
+    focusContextVis2.updateVis();
   })
 
   
@@ -433,14 +435,20 @@ function yearChange() {
 
   d3.csv('data/data-sample2.csv')
     .then(data => {
-      var node = document.getElementById('values');
-      let years = node.innerHTML.split(',')
 
+      let dd = document.getElementById('colors').value
+      if(dd == 'year') {
+        var node = document.getElementById('values');
+        let years = node.innerHTML.split(',')
+        leafletMap.renderVis(years, dd);
+      } else if(dd == 'startDayofYear') {
+        var node = document.getElementById('values_days');
+        let years = node.innerHTML.split(',')
+        leafletMap.renderVis(years, dd);
+      }
 
       // console.log(data)
 
-      let dd = document.getElementById('colors').value
-      leafletMap.renderVis(years, dd);
 
     });
 

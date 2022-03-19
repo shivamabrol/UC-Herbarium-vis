@@ -12,7 +12,8 @@ class FocusContextVis {
         height: 240,
         contextHeight: 50,
         margin: {top: 10, right: 10, bottom: 100, left: 45},
-        contextMargin: {top: 280, right: 10, bottom: 20, left: 45}
+        contextMargin: {top: 280, right: 10, bottom: 20, left: 45},
+        limits: _config.limits
       }
       this.data = _data;
       this.initVis();
@@ -24,19 +25,21 @@ class FocusContextVis {
     initVis() {
       let vis = this;
   
-      const containerWidth = vis.config.width + vis.config.margin.left + vis.config.margin.right;
-      const containerHeight = vis.config.height + vis.config.margin.top + vis.config.margin.bottom;
+      const containerWidth = 800;
+      const containerHeight = 400;
   
       //position on pages
-      vis.xScaleFocus = d3.scaleLinear()
-          .range([0, vis.config.width]);
+      // vis.xScaleFocus = d3.scaleLinear()
+      //     .range([100, vis.config.width]);
   
+      let lim = vis.config.limits.split(',');
       vis.xScaleContext = d3.scaleLinear()
-          .range([0, vis.config.width]);
+          .domain([lim[0], lim[1]])
+          .range([0, vis.config.width - 30]);
   
-      vis.yScaleFocus = d3.scaleLinear()
-          .range([vis.config.height, 0])
-          .nice();
+      // vis.yScaleFocus = d3.scaleLinear()
+      //     .range([vis.config.height, 0])
+      //     .nice();
   
       vis.yScaleContext = d3.scaleLinear()
           .range([vis.config.contextHeight, 0])
@@ -45,7 +48,7 @@ class FocusContextVis {
       // Initialize axes
       vis.xAxisFocus = d3.axisBottom(vis.xScaleFocus).tickSizeOuter(0);
       vis.xAxisContext = d3.axisBottom(vis.xScaleContext).tickSizeOuter(0);
-      vis.yAxisFocus = d3.axisLeft(vis.yScaleFocus);
+      // vis.yAxisFocus = d3.axisLeft(vis.yScaleFocus);
   
       // Define size of SVG drawing area
       vis.svg = d3.select(vis.config.parentElement)
@@ -125,20 +128,20 @@ class FocusContextVis {
       vis.yValue = d => d.year;
   
       // Initialize line and area generators
-      vis.line = d3.line()
-          .x(d => vis.xScaleFocus(vis.xValue(d)))
-          .y(d => vis.yScaleFocus(vis.yValue(d)));
+      // vis.line = d3.line()
+      //     .x(d => vis.xScaleFocus(vis.xValue(d)))
+      //     .y(d => vis.yScaleFocus(vis.yValue(d)));
   
-      vis.area = d3.area()
-          .x(d => vis.xScaleContext(vis.xValue(d)))
-          .y1(d => vis.yScaleContext(vis.yValue(d)))
-          .y0(vis.config.contextHeight);
+      // vis.area = d3.area()
+      //     .x(d => vis.xScaleContext(vis.xValue(d)))
+      //     .y1(d => vis.yScaleContext(vis.yValue(d)))
+      //     .y0(vis.config.contextHeight);
   
       // Set the scale input domains
-      vis.xScaleFocus.domain(d3.extent(vis.data, vis.xValue));
-      vis.yScaleFocus.domain(d3.extent(vis.data, vis.yValue));
-      vis.xScaleContext.domain(vis.xScaleFocus.domain());
-      vis.yScaleContext.domain(vis.yScaleFocus.domain());
+      // vis.xScaleFocus.domain(d3.extent(vis.data, vis.xValue));
+      // vis.yScaleFocus.domain(d3.extent(vis.data, vis.yValue));
+      // vis.xScaleContext.domain(vis.xScaleFocus.domain());
+      // vis.yScaleContext.domain(vis.yScaleFocus.domain());
   
       vis.bisectDate = d3.bisector(vis.xValue).left;
   
@@ -198,12 +201,12 @@ class FocusContextVis {
            */
   
       // Update the axes
-      vis.xAxisFocusG.call(vis.xAxisFocus);
-      vis.yAxisFocusG.call(vis.yAxisFocus);
+      // vis.xAxisFocusG.call(vis.xAxisFocus);
+      // vis.yAxisFocusG.call(vis.yAxisFocus);
       vis.xAxisContextG.call(vis.xAxisContext);
   
       // Update the brush and define a default position
-      const defaultBrushSelection = [vis.xScaleFocus(new Date('2020-01-01')), vis.xScaleContext.range()[1]];
+      const defaultBrushSelection = [vis.xScaleContext(new Date('2020-01-01')), vis.xScaleContext.range()[1]];
       // console.log('this is ' + defaultBrushSelection)
       vis.brushG
           .call(vis.brush)
@@ -225,28 +228,44 @@ class FocusContextVis {
         year_values.push(parseInt(selectedDomain[1]))
         // console.log(year_values)
   
-  
-        var node = document.getElementById('years');
-        var newNode = document.createElement('p');
-  
-        newNode.setAttribute("id", "values");
-  
-        node.innerHTML = ""
-        newNode.appendChild(document.createTextNode(year_values));
-        node.appendChild(newNode);
-  
-        node.onchange();
+        let dd = document.getElementById('colors').value
+        if(dd == 'year') {
+          var node = document.getElementById('years');
+          var newNode = document.createElement('p');
+    
+          newNode.setAttribute("id", "values");
+    
+          node.innerHTML = ""
+          newNode.appendChild(document.createTextNode(year_values));
+          node.appendChild(newNode);
+    
+          node.onchange();
+        }
+        if(dd == 'startDayofYear') {
+          var node2 = document.getElementById('days');
+          var newNode2 = document.createElement('p');
+    
+          newNode2.setAttribute("id", "values_days");
+    
+          node2.innerHTML = ""
+          newNode2.appendChild(document.createTextNode(year_values));
+          node2.appendChild(newNode2);
+    
+          node2.onchange();
+        }
+
+
   
         // Update x-scale of the focus view accordingly
-        vis.xScaleFocus.domain(year_values);
+        // vis.xScaleFocus.domain(year_values);
       } else {
         // Reset x-scale of the focus view (full time period)
-        vis.xScaleFocus.domain(vis.xScaleContext.domain());
+        // vis.xScaleFocus.domain(vis.xScaleContext.domain());
       }
   
       // Redraw line and update x-axis labels in focus view
       vis.focusLinePath.attr('d', vis.line);
-      vis.xAxisFocusG.call(vis.xAxisFocus);
+      // vis.xAxisFocusG.call(vis.xAxisFocus);
     }
     
   }
