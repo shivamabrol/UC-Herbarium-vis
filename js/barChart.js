@@ -24,12 +24,7 @@ class BarChart {
         vis.yValue = d => d.y;
         vis.tp = '#tooltipBarChart1';
 
-        vis.xScale = d3
-            .scaleBand()
-            .range([0, vis.width])
-            .domain(vis.data.map(function (d) { return d.x; }))
-            .paddingInner(0.2)
-            .paddingOuter(0.2);
+        
         // vis.yScale = d3.scaleLinear()
         //     .domain([0, d3.max(vis.data, vis.yValue)])
         //     .range([vis.height, 0])
@@ -37,6 +32,36 @@ class BarChart {
         //     console.log(vis.yScale);
         //vis.yScale = d3.scaleLinear().range([vis.height-25, 0])
         //move y axis up for room for labels
+
+        // vis.xAxisG = vis.chart.append('g')
+        //     .attr('class', 'axis x-axis')
+        //     .attr('transform', `translate(0,${vis.height})`)
+        //     //.attr("transform", "rotate(-90)")
+        //     .call(vis.xAxis);
+        vis.svg = d3.select(vis.config.parentElement)
+            .attr('width', vis.config.containerWidth)
+            .attr('height', vis.config.containerHeight);
+        vis.chart = vis.svg.append('g')
+            .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+
+
+        //.attr('transform', `translate(0,${vis.height})`)
+        vis.updateVis();
+    }
+
+    updateVis() {
+
+
+        let vis = this
+        vis.chart.selectAll('*')
+            .data([])
+            .exit().remove();
+        vis.xScale = d3
+            .scaleBand()
+            .range([0, vis.width])
+            .domain(vis.data.map(function (d) { return d.x; }))
+            .paddingInner(0.2)
+            .paddingOuter(0.2);
         vis.yScale = d3.scaleLinear().range([vis.height, 0])
 
             .domain([0, d3.max(vis.data, function (d) { return d.y; })]);
@@ -44,22 +69,12 @@ class BarChart {
 
         vis.xAxis = d3.axisTop(vis.xScale);
         vis.yAxis = d3.axisLeft(vis.yScale);
-        vis.svg = d3.select(vis.config.parentElement)
-            .attr('width', vis.config.containerWidth)
-            .attr('height', vis.config.containerHeight);
 
-        vis.chart = vis.svg.append('g')
-            .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+
 
         vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis')
             .call(vis.yAxis);
-
-        // vis.xAxisG = vis.chart.append('g')
-        //     .attr('class', 'axis x-axis')
-        //     .attr('transform', `translate(0,${vis.height})`)
-        //     //.attr("transform", "rotate(-90)")
-        //     .call(vis.xAxis);
 
         vis.chart.append("g")
             .attr("class", "axis")
@@ -70,15 +85,6 @@ class BarChart {
             .attr("dx", "-1em")
             .attr("dy", "-0.5em")
             .attr("transform", "rotate(90)")
-        //.attr('transform', `translate(0,${vis.height})`)
-        vis.updateVis();
-    }
-
-    updateVis() {
-
-
-        let vis = this
-
 
         vis.chart.selectAll('.bar')
             .data(vis.data)
@@ -92,18 +98,18 @@ class BarChart {
             //.attr('height', 200)
             .attr('height', (s) => vis.height - vis.yScale(s.y))
             .attr('width', vis.xScale.bandwidth())
-            .on('mouseover', (event,d) => {
+            .on('mouseover', (event, d) => {
                 console.log("mouse over! ");
                 //console.log(event);
                 console.log(d);
-  
-              d3.select(vis.tp)
-                .style('display', 'block')
-               // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-               // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-               .style('left', (event.screenX) + 'px') 
-               .style('top', (event.screenY) + 'px')
-                .html(`
+
+                d3.select(vis.tp)
+                    .style('display', 'block')
+                    // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+                    // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                    .style('left', (event.screenX) + 'px')
+                    .style('top', (event.screenY) + 'px')
+                    .html(`
                   <div class="tooltip-title">Key: ${d.x}</div>
                   <ul>
                     <li> Value: ${d.y}</li>
@@ -112,9 +118,9 @@ class BarChart {
                 `);
             })
             .on('mouseleave', () => {
-              d3.select(vis.tp).style('display', 'none');
+                d3.select(vis.tp).style('display', 'none');
             });
-            vis.chart.append("g")
+        vis.chart.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(0," + vis.height + ")")
             .call(d3.axisBottom(vis.xScale))
@@ -124,6 +130,6 @@ class BarChart {
             .attr("dy", "-0.5em")
             .attr("transform", "rotate(90)")
     }
-    
+
 
 }

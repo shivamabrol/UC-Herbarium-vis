@@ -106,6 +106,8 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerWidth': 600
     }, timeYear);
     barTimeYear.tp = "#tooltipBarChart1";
+    barTimeYear.data = timeYear;
+    barTimeYear.updateVis();
     barTimeYear.svg.append("text")
       // .attr("class", "y label")
       .attr("text-anchor", "middle")
@@ -171,7 +173,7 @@ d3.csv('data/data-sample2.csv')//updted the data
           Agaricomycetes = Agaricomycetes + 1;
           break;
         case 'Ustilaginomycetes':
-          april = april + 1;
+          Ustilaginomycetes = Ustilaginomycetes + 1;
           break;
         case 'Tremellomycetes':
           Tremellomycetes = Tremellomycetes + 1;
@@ -427,7 +429,7 @@ d3.csv('data/data-sample2.csv')//updted the data
     focusContextVis2.updateVis();
   })
 
-  
+
   .catch(error => console.error(error));
 
 function yearChange() {
@@ -435,21 +437,323 @@ function yearChange() {
 
   d3.csv('data/data-sample2.csv')
     .then(data => {
-
+      let years;
       let dd = document.getElementById('colors').value
-      if(dd == 'year') {
+      if (dd == 'year') {
         var node = document.getElementById('values');
-        let years = node.innerHTML.split(',')
+        //an array of the years we want to filter
+        years = node.innerHTML.split(',')
         leafletMap.renderVis(years, dd);
-      } else if(dd == 'startDayofYear') {
+      } else if (dd == 'startDayofYear') {
         var node = document.getElementById('values_days');
-        let years = node.innerHTML.split(',')
+        years = node.innerHTML.split(',')
         leafletMap.renderVis(years, dd);
       }
 
       // console.log(data)
 
+      //TODO: EMMA
+      //find max and min year and filter data accordingly
 
+      // console.log("heelo")
+      //console.log(years);
+      //console.log(data);
+      let maxYear = years[1];
+      let minYear = years[0];
+      minYear = +minYear;
+      maxYear = +maxYear;
+      if (minYear < maxYear) {
+        // console.log(typeof maxYear);
+        let jan1 = 0;
+        let feb1 = 0;
+        let march1 = 0;
+        let april1 = 0;
+        let may1 = 0;
+        let jun1 = 0;
+        let jul1 = 0;
+        let aug1 = 0;
+        let sept1 = 0;
+        let nov1 = 0;
+        let oct1 = 0;
+        let dec1 = 0;
+        let unknown2 = 0;
+
+        let timeYear1 = []
+        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+          //console.log(d);
+          d.year = +d.year;
+          // if(d.year<=maxYear && d.year>= minYear){
+          // console.log(d.year);
+          // console.log(typeof d.year);
+
+          switch (d.month) {
+            case '1':
+              jan1 = jan1 + 1;
+              break;
+            case '2':
+              feb1 = feb1 + 1;
+              break;
+            case '3':
+              march1 = march1 + 1;
+              break;
+            case '4':
+              april1 = april1 + 1;
+              break;
+            case '5':
+              may1 = may1 + 1;
+              break;
+            case '6':
+              jun1 = jun1 + 1;
+              break;
+            case '7':
+              jul1 = jul1 + 1;
+              break;
+            case '8':
+              aug1 = aug1 + 1;
+              break;
+            case '9':
+              sept1 = sept1 + 1;
+              break;
+            case '10':
+              oct1 = oct1 + 1;
+              break;
+            case '11':
+              nov1 = nov1 + 1;
+              break;
+            case '12':
+              dec1 = dec1 + 1;
+              break;
+            case "null":
+              //console.log(d.month);
+              unknown2 = unknown2 + 1;
+              break;
+            default:
+              //console.log(d.month);
+              unknown2 = unknown2 + 1;
+              break;
+            // }
+          }
+        })
+        //console.log(unk)
+
+        jan1 != 0 ? timeYear1.push({ 'x': "Jan", 'y': jan1 }) : jan1 = jan1;
+        feb1 != 0 ? timeYear1.push({ 'x': "Feb", 'y': feb1 }) : feb1 = feb1;
+        march1 != 0 ? timeYear1.push({ 'x': "March", 'y': march1 }) : march1 = march1;
+        april1 != 0 ? timeYear1.push({ 'x': "April", 'y': april1 }) : april1 = april1;
+        may1 != 0 ? timeYear1.push({ 'x': "May", 'y': may1 }) : may1 = may1;
+        jun1 != 0 ? timeYear1.push({ 'x': "Jun", 'y': jun1 }) : jun1 = jun1;
+        jul1 != 0 ? timeYear1.push({ 'x': "Jul", 'y': jul1 }) : jul1 = jul1;
+        aug1 != 0 ? timeYear1.push({ 'x': "Aug", 'y': aug1 }) : aug1 = aug1;
+        sept1 != 0 ? timeYear1.push({ 'x': "Spt", 'y': sept1 }) : sept1 = sept1;
+        oct1 != 0 ? timeYear1.push({ 'x': "Oct", 'y': oct1 }) : oct1 = oct1;
+        nov1 != 0 ? timeYear1.push({ 'x': "Nov", 'y': nov1 }) : nov1 = nov1;
+        dec1 != 0 ? timeYear1.push({ 'x': "Dec", 'y': dec1 }) : dec1 = dec1;
+        unknown2 != 0 ? timeYear1.push({ 'x': "Unk", 'y': unknown2 }) : unknown2 = unknown2;
+
+        barTimeYear.data = timeYear1;
+        barTimeYear.updateVis();
+
+        let Myxomycetes1 = 0;
+        let Sordariomycetes1 = 0;
+        let Agaricomycetes1 = 0;
+        let Ustilaginomycetes1 = 0;
+        let Tremellomycetes1 = 0;
+        let Taphrinomycetes1 = 0;
+        let Pucciniomycetes1 = 0;
+        let Dothideomycetes1 = 0;
+        let Myxogastrea1 = 0;
+        let Pezizomycetes1 = 0;
+        let Leotiomycetes1 = 0;
+        let Chytridiomycetes1 = 0;
+        let Oomycetes1 = 0;
+        let Lecanoromycetes1 = 0;
+        let Blastocladiomycetes1 = 0;
+        let Eurotiomycetes1 = 0;
+        let Orbiliomycetes1 = 0;
+        let Dacrymycetes1 = 0;
+        let Lichinomycetes1 = 0;
+        let Exobasidiomycetes1 = 0;
+        let unknown12 = 0;
+
+        let classs1 = [];
+        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+          switch (d.class) {
+            case 'Myxomycetes':
+              Myxomycetes1 = Myxomycetes1 + 1;
+              break;
+            case 'Sordariomycetes':
+              Sordariomycetes1 = Sordariomycetes1 + 1;
+              break;
+            case 'Agaricomycetes':
+              Agaricomycetes1 = Agaricomycetes1 + 1;
+              break;
+            case 'Ustilaginomycetes':
+              Ustilaginomycetes1 = Ustilaginomycetes1 + 1;
+              break;
+            case 'Tremellomycetes':
+              Tremellomycetes1 = Tremellomycetes1 + 1;
+              break;
+            case 'Taphrinomycetes':
+              Taphrinomycetes1 = Taphrinomycetes1 + 1;
+              break;
+            case 'Pucciniomycetes':
+              Pucciniomycetes1 = Pucciniomycetes1 + 1;
+              break;
+            case 'Pezizomycetes':
+              Pezizomycetes1 = Pezizomycetes1 + 1;
+              break;
+            case 'Dothideomycetes':
+              Dothideomycetes1 = Dothideomycetes1 + 1;
+              break;
+            case 'Myxogastrea':
+              Myxogastrea1 = Myxogastrea1 + 1;
+              break;
+            case 'Leotiomycetes':
+              Leotiomycetes1 = Leotiomycetes1 + 1;
+              break;
+            case 'Chytridiomycetes':
+              Chytridiomycetes1 = Chytridiomycetes1 + 1;
+              break;
+            case 'Oomycetes':
+              Oomycetes1 = Oomycetes1 + 1;
+              break;
+            case 'Lecanoromycetes':
+              Lecanoromycetes1 = Lecanoromycetes1 + 1;
+              break;
+            case 'Blastocladiomycetes':
+              Blastocladiomycetes1 = Blastocladiomycetes1 + 1;
+              break;
+            case 'Eurotiomycetes':
+              Eurotiomycetes1 = Eurotiomycetes1 + 1;
+              break;
+            case 'Orbiliomycetes':
+              Orbiliomycetes1 = Orbiliomycetes1 + 1;
+              break;
+            case 'Dacrymycetes':
+              Dacrymycetes1 = Dacrymycetes1 + 1;
+              break;
+            case 'Lichinomycetes':
+              Lichinomycetes1 = Lichinomycetes1 + 1;
+              break;
+            case 'Exobasidiomycetes':
+              Exobasidiomycetes1 = Exobasidiomycetes1 + 1;
+              break;
+            case "":
+              //console.log(d.month);
+              unknown12 = unknown12 + 1;
+              break;
+            default:
+              //console.log(d.month);
+              unknown12 = unknown12 + 1;
+              break;
+          }
+        });
+        //console.log(unk)
+        Myxomycetes1 != 0 ? classs1.push({ 'x': "Myxomycetes", 'y': Myxomycetes1 }) : Myxomycetes1 = Myxomycetes1;
+        Sordariomycetes1 != 0 ? classs1.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes1 }) : Sordariomycetes1 = Sordariomycetes1;
+        Agaricomycetes1 != 0 ? classs1.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes1 }) : Agaricomycetes1 = Agaricomycetes1;
+        Ustilaginomycetes1 != 0 ? classs1.push({ 'x': "Ustilaginomycetes", 'y': Ustilaginomycetes1 }) : Ustilaginomycetes1 = Ustilaginomycetes1;
+        Tremellomycetes1 != 0 ? classs1.push({ 'x': "Tremellomycetes", 'y': Tremellomycetes1 }) : Tremellomycetes1 = Tremellomycetes1;
+        Taphrinomycetes1 != 0 ? classs1.push({ 'x': "Taphrinomycetes", 'y': Taphrinomycetes1 }) : Taphrinomycetes1 = Taphrinomycetes1;
+        Pucciniomycetes1 != 0 ? classs1.push({ 'x': "Pucciniomycetes", 'y': Pucciniomycetes1 }) : Pucciniomycetes1 = Pucciniomycetes1;
+        Pezizomycetes1 != 0 ? classs1.push({ 'x': "Pezizomycetes", 'y': Pezizomycetes1 }) : Pezizomycetes1 = Pezizomycetes1;
+        Dothideomycetes1 != 0 ? classs1.push({ 'x': "Dothideomycetes", 'y': Dothideomycetes1 }) : Dothideomycetes1 = Dothideomycetes1;
+        Myxogastrea1 != 0 ? classs1.push({ 'x': "Myxogastrea", 'y': Myxogastrea1 }) : Myxogastrea1 = Myxogastrea1;
+        Leotiomycetes1 != 0 ? classs1.push({ 'x': "Leotiomycetes", 'y': Leotiomycetes1 }) : Leotiomycetes1 = Leotiomycetes1;
+        Chytridiomycetes1 != 0 ? classs1.push({ 'x': "Chytridiomycetes", 'y': Chytridiomycetes1 }) : Chytridiomycetes1 = Chytridiomycetes1;
+        Oomycetes1 != 0 ? classs1.push({ 'x': "Oomycetes", 'y': Oomycetes1 }) : Oomycetes1 = Oomycetes1;
+        Lecanoromycetes1 != 0 ? classs1.push({ 'x': "Lecanoromycetes", 'y': Lecanoromycetes1 }) : Lecanoromycetes1 = Lecanoromycetes1;
+        Blastocladiomycetes1 != 0 ? classs1.push({ 'x': "Blastocladiomycetes", 'y': Blastocladiomycetes1 }) : Blastocladiomycetes1 = Blastocladiomycetes1;
+        Eurotiomycetes1 != 0 ? classs1.push({ 'x': "Eurotiomycetes", 'y': Eurotiomycetes1 }) : Eurotiomycetes1 = Eurotiomycetes1;
+        Orbiliomycetes1 != 0 ? classs1.push({ 'x': "Orbiliomycetes", 'y': Orbiliomycetes1 }) : Orbiliomycetes1 = Orbiliomycetes1;
+        Dacrymycetes1 != 0 ? classs1.push({ 'x': "Dacrymycetes", 'y': Dacrymycetes1 }) : Dacrymycetes1 = Dacrymycetes1;
+        Lichinomycetes1 != 0 ? classs1.push({ 'x': "Lichinomycetes", 'y': Lichinomycetes1 }) : Lichinomycetes1 = Lichinomycetes1;
+        Exobasidiomycetes1 != 0 ? classs1.push({ 'x': "Exobasidiomycetes", 'y': Exobasidiomycetes1 }) : Exobasidiomycetes1 = Exobasidiomycetes1;
+        unknown12 != 0 ? classs1.push({ 'x': "unknown", 'y': unknown12 }) : unknown12 = unknown12;
+        barClasss.data = classs1;
+        barClasss.updateVis();
+
+        keysAll12 = [];
+        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+          //console.log(d);
+          keysAll12.push(d.recordedBy);
+        });
+        console.log(keysAll12);
+        function onlyUnique(value, index, self) {
+          return self.indexOf(value) === index;
+        }
+        keys12 = keysAll12.filter(onlyUnique);
+        //console.log(keys);
+        // Initialize chart and then show it
+        let redorder2 = [];
+        for (let i = 0; i < keys1.length; i++) {
+          // console.log(keys[i]);
+          let count2 = 0;
+          data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+            //console.log(d.recordedBy);
+            if (keys12[i] == d.recordedBy) {
+              count2 += 1;
+            }
+          });
+
+          if (redorder2.length < 10) {
+            redorder2.push({ 'x': keys12[i], 'y': count2 })
+            //console.log(count);
+          } else {
+            let miin2 = 100000;
+            let index2 = 0;
+            for (let k = 0; k < redorder2.length; k++) {
+              if (miin2 > redorder2[k].x) {
+                miin2 = redorder2[k].x;
+                index2 = k;
+              }
+            }
+            if (miin2 < count2) {
+              redorder2.splice(index2, 1)
+              redorder2.push({ 'x': keys12[i], 'y': count2 })
+
+            }
+          }
+        }
+        barRecordedBy.data = redorder2;
+        barRecordedBy.updateVis();
+
+        let withCoords2 = [];
+        let yes2 = 0;
+        let no2 = 0;
+        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+          if (d.decimalLatitude == "" || d.decimalLongitude == "") {
+            no2 += 1;
+          }
+          else {
+            yes2 += 1;
+          }
+        });
+        yes2 != 0 ? withCoords2.push({ 'key': 'Yes', 'value': yes2 }) : yes2 = yes2;
+        no2 != 0 ? withCoords2.push({ 'key': 'No', 'value': no2 }) : no2 = no2;
+
+        pieCoords.data = withCoords2;
+        pieCoords.updateVis();
+
+        let withEventDate2 = [];
+        let yes12 = 0;
+        let no12 = 0;
+        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+          if (d.eventDate == "") {
+            no12 += 1;
+          }
+          else {
+            yes12 += 1;
+          }
+        });
+        yes12 != 0 ? withEventDate2.push({ 'key': 'Yes', 'value': yes12 }) : yes12 = yes12;
+        no12 != 0 ? withEventDate2.push({ 'key': 'No', 'value': no12 }) : no12 = no12;
+
+        pieEvent.data = withEventDate2;
+        pieEvent.updateVis();
+      }
     });
 
 }
