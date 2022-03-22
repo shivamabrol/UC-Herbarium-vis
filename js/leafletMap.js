@@ -189,15 +189,18 @@ class LeafletMap {
 
     // class_null = vis.data.filter(d => d.class != 'null'),
     // startDay_null = vis.data.filter(d => d.startDayOfYear != 'null');
+
+    vis.colorScale = d3.scaleSequential()
+      .interpolator(d3.interpolateViridis);
+
+    if (param.length > 0 && param[0] < param[1]) {
+      data = data.filter(d => d.year >= param[0]);
+      data = data.filter(d => d.year <= param[1]);
+    }
     switch (color) {
       case 'year':
         vis.colorScale = d3.scaleSequential()
           .interpolator(d3.interpolateViridis);
-
-        if (param.length > 0) {
-          data = data.filter(d => d.year >= param[0]);
-          data = data.filter(d => d.year <= param[1]);
-        }
         // let minYear = d3.min(year_null, d => d.year),
         // maxYear = d3.max(year_null, d => d.year);
         //years are lexicographically increasing so no need to hardcode
@@ -206,11 +209,6 @@ class LeafletMap {
       case 'startDayofYear':
         vis.colorScale = d3.scaleSequential()
           .interpolator(d3.interpolateViridis);
-
-        if (param.length > 0) {
-          data = data.filter(d => d.startDayOfYear >= param[0]);
-          data = data.filter(d => d.startDayOfYear <= param[1]);
-        }
         // let firstStartDay = d3.min(startDay_null, d => d.startDayOfYear)
         // , lastStartDay = d3.max(startDay_null, d => d.startDayOfYear)
         // 364 string is less than 99 so hardcoded these

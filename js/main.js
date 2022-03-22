@@ -439,16 +439,11 @@ function yearChange() {
     .then(data => {
       let years;
       let dd = document.getElementById('colors').value
-      if (dd == 'year') {
-        var node = document.getElementById('values');
-        //an array of the years we want to filter
-        years = node.innerHTML.split(',')
-        leafletMap.renderVis(years, dd);
-      } else if (dd == 'startDayofYear') {
-        var node = document.getElementById('values_days');
-        years = node.innerHTML.split(',')
-        leafletMap.renderVis(years, dd);
-      }
+
+      var node = document.getElementById('values');
+      //an array of the years we want to filter
+      years = node.innerHTML.split(',')
+      leafletMap.renderVis(years, dd);
 
       // console.log(data)
 
@@ -678,7 +673,7 @@ function yearChange() {
           //console.log(d);
           keysAll12.push(d.recordedBy);
         });
-        console.log(keysAll12);
+        // console.log(keysAll12);
         function onlyUnique(value, index, self) {
           return self.indexOf(value) === index;
         }
