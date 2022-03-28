@@ -47,10 +47,40 @@ class LeafletMap {
     vis.theMap = L.map('my-map', {
       center: [30, 0],
       zoom: 2,
+      selectArea: true,
       layers: [vis.base_layer]
     });
     vis.colorScale = d3.scaleSequential()
       .interpolator(d3.interpolateViridis);
+
+    vis.theMap.on('areaselected', (e) => {
+      console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+    });
+
+    // You can restrict selection area like this:
+    const bounds = vis.theMap.getBounds().pad(-0.25); // save current map bounds as restriction area
+    // check restricted area on start and move
+    vis.theMap.selectArea.setValidate((layerPoint) => {
+      return bounds.contains(
+        this._map.layerPointToLatLng(layerPoint)
+      );
+    });
+
+    // now switch it off
+    vis.theMap.selectArea.setValidate();
+
+
+    // dragging will be enabled and you can
+    // start selecting with Ctrl key pressed
+    // vis.theMap.selectArea.setCtrlKey(true);
+
+    // box-zoom will be disabled and you can
+    // start selecting with Shift key pressed
+    // vis.theMap.selectArea.setCtrlKey(true);
+
+
+
+
 
     let year_null = vis.data.filter(d => d.year != 'null'),
       startDay_null = vis.data.filter(d => d.startDayOfYear != 'null');
