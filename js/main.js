@@ -1,15 +1,15 @@
 
 
-
+let maxYear = 0;
+let minYear = 100;
+let lat1;
+let long1;
+let lat2;
+let long2;
 d3.csv('data/worldcities.csv')
 d3.csv('data/data-sample2.csv')//updted the data
   .then(data => {
     data.forEach(d => {
-      // console.log(d);
-      // if (d.month == "null") {
-      //   d.month = '0';
-      // }
-      // d.month = +d.month;
       if (d.decimalLatitude == "null" || d.decimalLongitude == "null" || d.year == "null") {
         d.latitude = 99999999999999;
         d.longitude = 99999999999999;
@@ -445,20 +445,11 @@ function yearChange() {
       years = node.innerHTML.split(',')
       leafletMap.renderVis(years, dd);
 
-      // console.log(data)
-
-      //TODO: EMMA
-      //find max and min year and filter data accordingly
-
-      // console.log("heelo")
-      //console.log(years);
-      //console.log(data);
-      let maxYear = years[1];
-      let minYear = years[0];
+      maxYear = years[1];
+      minYear = years[0];
       minYear = +minYear;
       maxYear = +maxYear;
       if (minYear < maxYear) {
-        // console.log(typeof maxYear);
         let jan1 = 0;
         let feb1 = 0;
         let march1 = 0;
@@ -475,12 +466,7 @@ function yearChange() {
 
         let timeYear1 = []
         data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
-          //console.log(d);
           d.year = +d.year;
-          // if(d.year<=maxYear && d.year>= minYear){
-          // console.log(d.year);
-          // console.log(typeof d.year);
-
           switch (d.month) {
             case '1':
               jan1 = jan1 + 1;
@@ -519,17 +505,13 @@ function yearChange() {
               dec1 = dec1 + 1;
               break;
             case "null":
-              //console.log(d.month);
               unknown2 = unknown2 + 1;
               break;
             default:
-              //console.log(d.month);
               unknown2 = unknown2 + 1;
               break;
-            // }
           }
         })
-        //console.log(unk)
 
         jan1 != 0 ? timeYear1.push({ 'x': "Jan", 'y': jan1 }) : jan1 = jan1;
         feb1 != 0 ? timeYear1.push({ 'x': "Feb", 'y': feb1 }) : feb1 = feb1;

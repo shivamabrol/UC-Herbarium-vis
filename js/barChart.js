@@ -98,28 +98,28 @@ class BarChart {
             //.attr('height', 200)
             .attr('height', (s) => vis.height - vis.yScale(s.y))
             .attr('width', vis.xScale.bandwidth())
-            .on('mouseover', (event, d) => {
-                console.log("mouse over! ");
-                //console.log(event);
-                console.log(d);
-
-                d3.select(vis.tp)
-                    .style('display', 'block')
-                    // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                    // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                    .style('left', (event.screenX) + 'px')
-                    .style('top', (event.screenY) + 'px')
-                    .html(`
+            .on('mouseover', function (event, d) { 
+        
+                //create a tool tip
+                d3.select('#tooltip')
+                  .style('opacity', 1)
+                  .style('z-index', 1000000)
+                  .html(`
                   <div class="tooltip-title">Key: ${d.x}</div>
                   <ul>
                     <li> Value: ${d.y}</li>
 
                   </ul>
                 `);
-            })
-            .on('mouseleave', () => {
-                d3.select(vis.tp).style('display', 'none');
-            });
+       
+              })
+              .on('mousemove', (event) => {
+                //position the tooltip
+                d3.select('#tooltip')
+                  .style('left', (event.pageX + 10) + 'px')
+                  .style('top', (event.pageY + 10) + 'px');
+              })
+
         vis.chart.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(0," + vis.height + ")")

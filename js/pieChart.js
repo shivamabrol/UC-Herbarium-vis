@@ -14,7 +14,7 @@ class PieChart {
 
     initVis() {
         let vis = this;
-        vis.tp;
+        vis.tp = '#tooltip';
 
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
@@ -98,27 +98,25 @@ class PieChart {
             .attr("stroke", "black")
             .style("stroke-width", "2px")
             .style("opacity", 0.7)
-            .on('mouseover', (event,d) => {
-                console.log("mouse over! ");
-               // console.log(event);
-                console.log(d);
-  
-              d3.select(vis.tp)
-                .style('display', 'block')
-               // .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-               // .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-               .style('left', (event.screenX) + 'px') 
-               .style('top', (event.screenY) + 'px')
-                .html(`
+            .on('mouseover', function (event, d) { 
+        
+                //create a tool tip
+                d3.select('#tooltip')
+                  .style('opacity', 1)
+                  .style('z-index', 1000000)
+                  .html(`
                   <div class="tooltip-title">Key: ${d.data.key}</div>
                   <ul>
                     <li> Value: ${d.value}</li>
-
+ 
                   </ul>
-                `);
-            })
-            .on('mouseleave', () => {
-              d3.select(vis.tp).style('display', 'none');
-            }); 
+                `);        
+              })
+              .on('mousemove', (event) => {
+                //position the tooltip
+                d3.select('#tooltip')
+                  .style('left', (event.pageX + 10) + 'px')
+                  .style('top', (event.pageY + 10) + 'px');
+              })
     }
 }
