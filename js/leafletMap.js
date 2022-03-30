@@ -57,12 +57,18 @@ class LeafletMap {
     vis.colorScale = d3.scaleSequential()
       .interpolator(d3.interpolateViridis);
 
-    // vis.coords = "heelo";
-    vis.coords = vis.theMap.on('areaselected', (e) => {
-      // console.log( e.bounds.toBBoxString()); // lon, lat, lon, lat
-       
-       this.bounders(e.bounds.toBBoxString());
-      // console.log(vis.coords);
+    vis.theMap.on('areaselected', (e) => {
+      console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      var node = document.getElementById('box_dims');
+      var newNode = document.createElement('p');
+
+      newNode.setAttribute("id", "box_vals");
+
+      node.innerHTML = ""
+      newNode.appendChild(document.createTextNode(e.bounds.toBBoxString()));
+      node.appendChild(newNode);
+
+      node.onchange();
     });
     console.log(vis.coords);
 
