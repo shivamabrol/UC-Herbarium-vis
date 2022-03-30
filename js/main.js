@@ -5,6 +5,7 @@ let minYear = 100;
 let lat1;
 let long1;
 let lat2;
+let leafletMap;
 let long2;
 d3.csv('data/worldcities.csv')
 d3.csv('data/data-sample2.csv')//updted the data
@@ -75,16 +76,13 @@ d3.csv('data/data-sample2.csv')//updted the data
           dec = dec + 1;
           break;
         case "null":
-          //console.log(d.month);
           unknown = unknown + 1;
           break;
         default:
-          //console.log(d.month);
           unknown = unknown + 1;
           break;
       }
     })
-    //console.log(unk)
 
     timeYear.push({ 'x': "Jan", 'y': jan });
     timeYear.push({ 'x': "Feb", 'y': feb });
@@ -109,7 +107,6 @@ d3.csv('data/data-sample2.csv')//updted the data
     barTimeYear.data = timeYear;
     barTimeYear.updateVis();
     barTimeYear.svg.append("text")
-      // .attr("class", "y label")
       .attr("text-anchor", "middle")
       .attr("x", (barTimeYear.width / 2) + 30
       )
@@ -130,14 +127,12 @@ d3.csv('data/data-sample2.csv')//updted the data
 
     keysAll = [];
     data.forEach(d => {
-      //console.log(d);
       keysAll.push(d.class)
     });
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
     keys = keysAll.filter(onlyUnique);
-    console.log(keys);
     let Myxomycetes = 0;
     let Sordariomycetes = 0;
     let Agaricomycetes = 0;
@@ -224,16 +219,13 @@ d3.csv('data/data-sample2.csv')//updted the data
           Exobasidiomycetes = Exobasidiomycetes + 1;
           break;
         case "":
-          //console.log(d.month);
           unknown1 = unknown1 + 1;
           break;
         default:
-          //console.log(d.month);
           unknown1 = unknown1 + 1;
           break;
       }
     });
-    //console.log(unk)
     Myxomycetes != 0 ? classs.push({ 'x': "Myxomycetes", 'y': Myxomycetes }) : Myxomycetes = Myxomycetes;
     Sordariomycetes != 0 ? classs.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes }) : Sordariomycetes = Sordariomycetes;
     Agaricomycetes != 0 ? classs.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes }) : Agaricomycetes = Agaricomycetes;
@@ -284,22 +276,18 @@ d3.csv('data/data-sample2.csv')//updted the data
 
     keysAll1 = [];
     data.forEach(d => {
-      //console.log(d);
       keysAll1.push(d.recordedBy)
     });
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
     keys1 = keysAll1.filter(onlyUnique);
-    //console.log(keys);
     // Initialize chart and then show it
     let redorder = [];
     for (let i = 0; i < keys1.length; i++) {
-      // console.log(keys[i]);
       let count = 0;
       data.forEach(d => {
 
-        //console.log(d.recordedBy);
         if (keys1[i] == d.recordedBy) {
           count += 1;
         }
@@ -307,7 +295,6 @@ d3.csv('data/data-sample2.csv')//updted the data
 
       if (redorder.length < 10) {
         redorder.push({ 'x': keys1[i], 'y': count })
-        //console.log(count);
 
       } else {
         let miin = 100000;
@@ -332,7 +319,6 @@ d3.csv('data/data-sample2.csv')//updted the data
       'containerHeight': 350,
       'containerWidth': 600
     }, redorder);
-    console.log(redorder);
     barRecordedBy.tp = "#tooltipBarChart3";
 
     barRecordedBy.svg.append("text")
@@ -422,6 +408,8 @@ d3.csv('data/data-sample2.csv')//updted the data
       parentElement: '#my-map',
       colorBy: 'year'
     }, data);
+    // leafletMap.bounders();
+    console.log('emma')
 
     let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data);
     focusContextVis.updateVis();
@@ -616,16 +604,13 @@ function yearChange() {
               Exobasidiomycetes1 = Exobasidiomycetes1 + 1;
               break;
             case "":
-              //console.log(d.month);
               unknown12 = unknown12 + 1;
               break;
             default:
-              //console.log(d.month);
               unknown12 = unknown12 + 1;
               break;
           }
         });
-        //console.log(unk)
         Myxomycetes1 != 0 ? classs1.push({ 'x': "Myxomycetes", 'y': Myxomycetes1 }) : Myxomycetes1 = Myxomycetes1;
         Sordariomycetes1 != 0 ? classs1.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes1 }) : Sordariomycetes1 = Sordariomycetes1;
         Agaricomycetes1 != 0 ? classs1.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes1 }) : Agaricomycetes1 = Agaricomycetes1;
@@ -652,22 +637,17 @@ function yearChange() {
 
         keysAll12 = [];
         data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
-          //console.log(d);
           keysAll12.push(d.recordedBy);
         });
-        // console.log(keysAll12);
         function onlyUnique(value, index, self) {
           return self.indexOf(value) === index;
         }
         keys12 = keysAll12.filter(onlyUnique);
-        //console.log(keys);
         // Initialize chart and then show it
         let redorder2 = [];
         for (let i = 0; i < keys1.length; i++) {
-          // console.log(keys[i]);
           let count2 = 0;
           data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
-            //console.log(d.recordedBy);
             if (keys12[i] == d.recordedBy) {
               count2 += 1;
             }
@@ -675,7 +655,6 @@ function yearChange() {
 
           if (redorder2.length < 10) {
             redorder2.push({ 'x': keys12[i], 'y': count2 })
-            //console.log(count);
           } else {
             let miin2 = 100000;
             let index2 = 0;
@@ -734,6 +713,11 @@ function yearChange() {
     });
 
 }
+
+function areaChange(){
+  //this is changes based on brushing the map
+
+}
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
 
@@ -766,7 +750,6 @@ function createOption(ddl, text, value) {
   ddl.options.add(opt);
 }
 
-// console.log(d);
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }

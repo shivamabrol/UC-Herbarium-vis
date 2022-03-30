@@ -5,6 +5,7 @@ class LeafletMap {
    * @param {Object}
    * @param {Array}
    */
+
   constructor(_config, _data) {
     this.config = {
       parentElement: _config.parentElement,
@@ -13,6 +14,9 @@ class LeafletMap {
     this.data = _data;
     this.initVis();
   }
+
+  //beta = "hello";
+
 
   /**
    * We initialize scales/axes and append static elements, such as axis titles.
@@ -53,9 +57,14 @@ class LeafletMap {
     vis.colorScale = d3.scaleSequential()
       .interpolator(d3.interpolateViridis);
 
-    vis.theMap.on('areaselected', (e) => {
-      console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+    // vis.coords = "heelo";
+    vis.coords = vis.theMap.on('areaselected', (e) => {
+      // console.log( e.bounds.toBBoxString()); // lon, lat, lon, lat
+       
+       this.bounders(e.bounds.toBBoxString());
+      // console.log(vis.coords);
     });
+    console.log(vis.coords);
 
     // You can restrict selection area like this:
     const bounds = vis.theMap.getBounds().pad(-0.25); // save current map bounds as restriction area
@@ -208,6 +217,14 @@ class LeafletMap {
 
   }
 
+  bounders(param) {
+    let vis = this;
+    console.log(param + "zz");
+
+    vis.coords = param;
+    console.log(vis.coords);
+  }
+
 
   renderVis(param, color) {
     let vis = this;
@@ -222,6 +239,15 @@ class LeafletMap {
 
     vis.colorScale = d3.scaleSequential()
       .interpolator(d3.interpolateViridis);
+
+    vis.theMap.on('areaselected', (e) => {
+       //console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      vis.coords = e.bounds.toBBoxString();
+      
+    });
+
+    //console.log(LeafletMap.beta);
+    //Promise.resolve().then(console.log(vis.coords));
 
     if (param.length > 0 && param[0] < param[1]) {
       data = data.filter(d => d.year >= param[0]);

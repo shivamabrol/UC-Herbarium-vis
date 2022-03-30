@@ -8,7 +8,6 @@ class PieChart {
         }
 
         this.data = _data;
-        console.log(this.data);
         this.initVis();
     }
 
@@ -39,15 +38,12 @@ class PieChart {
 
         vis.keysAll = [];
         vis.data.forEach(d => {
-            //console.log(d);
             vis.keysAll.push(d.key)});
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
         
         vis.keys = vis.keysAll.filter(onlyUnique);
-        // console.log(vis.keysAll);
-        console.log(vis.keys);
 
         vis.svg.selectAll("mydots")
             .data(vis.keys)
@@ -73,16 +69,13 @@ class PieChart {
         vis.chart.selectAll('path')
             .data([])
             .exit().remove();
-       // console.log('data')
         
         vis.pie = d3.pie()
             .value(function (d) {
-               // console.log(d);
                 return d.value
             })
 
         vis.data_ready = vis.pie(vis.data);
-        //console.log('data ready');
 
         vis.chart.selectAll('whatever')
             .data(vis.data_ready)
