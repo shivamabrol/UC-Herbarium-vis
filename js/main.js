@@ -734,6 +734,21 @@ function yearChange() {
     });
 
 }
+
+function dimChange() {
+  d3.csv('data/data-sample2.csv')
+  .then(data => {
+
+    var node = document.getElementById('box_vals');
+    //an array of the years we want to filter
+    dimensions = node.innerHTML.split(',')
+    console.log(dimensions)
+
+    //TODO: EMMA - do your thing
+
+
+  });
+}
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
 

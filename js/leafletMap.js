@@ -55,6 +55,16 @@ class LeafletMap {
 
     vis.theMap.on('areaselected', (e) => {
       console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      var node = document.getElementById('box_dims');
+      var newNode = document.createElement('p');
+
+      newNode.setAttribute("id", "box_vals");
+
+      node.innerHTML = ""
+      newNode.appendChild(document.createTextNode(e.bounds.toBBoxString()));
+      node.appendChild(newNode);
+
+      node.onchange();
     });
 
     // You can restrict selection area like this:
