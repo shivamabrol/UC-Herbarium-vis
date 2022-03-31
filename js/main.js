@@ -769,11 +769,203 @@ function dimChange() {
       // console.log(east);
       // console.log(west);
 
+      let jan3 = 0;
+      let feb3 = 0;
+      let march3 = 0;
+      let april3 = 0;
+      let may3 = 0;
+      let jun3 = 0;
+      let jul3 = 0;
+      let aug3 = 0;
+      let sept3 = 0;
+      let nov3 = 0;
+      let oct3 = 0;
+      let dec3 = 0;
+      let unknown3 = 0;
+      let timeYear3 = []
 
+      data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        d.year = +d.year;
+        switch (d.month) {
+          case '1':
+            jan3 = jan3 + 1;
+            break;
+          case '2':
+            feb3 = feb3 + 1;
+            break;
+          case '3':
+            march3 = march3 + 1;
+            break;
+          case '4':
+            april3 = april3 + 1;
+            break;
+          case '5':
+            may3 = may3 + 1;
+            break;
+          case '6':
+            jun3 = jun3 + 1;
+            break;
+          case '7':
+            jul3 = jul3 + 1;
+            break;
+          case '8':
+            aug3 = aug3 + 1;
+            break;
+          case '9':
+            sept3 = sept3 + 1;
+            break;
+          case '10':
+            oct3 = oct3 + 1;
+            break;
+          case '11':
+            nov3 = nov3 + 1;
+            break;
+          case '12':
+            dec3 = dec3 + 1;
+            break;
+          case "null":
+            unknown3 = unknown3 + 1;
+            break;
+          default:
+            unknown3 = unknown3 + 1;
+            break;
+        }
+      })
 
+      jan3 != 0 ? timeYear3.push({ 'x': "Jan", 'y': jan3 }) : jan3 = jan3;
+      feb3 != 0 ? timeYear3.push({ 'x': "Feb", 'y': feb3 }) : feb3 = feb3;
+      march3 != 0 ? timeYear3.push({ 'x': "March", 'y': march3 }) : march3 = march3;
+      april3 != 0 ? timeYear3.push({ 'x': "April", 'y': april3 }) : april3 = april3;
+      may3 != 0 ? timeYear3.push({ 'x': "May", 'y': may3 }) : may3 = may3;
+      jun3 != 0 ? timeYear3.push({ 'x': "Jun", 'y': jun3 }) : jun3 = jun3;
+      jul3 != 0 ? timeYear3.push({ 'x': "Jul", 'y': jul3 }) : jul3 = jul3;
+      aug3 != 0 ? timeYear3.push({ 'x': "Aug", 'y': aug3 }) : aug3 = aug3;
+      sept3 != 0 ? timeYear3.push({ 'x': "Spt", 'y': sept3 }) : sept3 = sept3;
+      oct3 != 0 ? timeYear3.push({ 'x': "Oct", 'y': oct3 }) : oct3 = oct3;
+      nov3 != 0 ? timeYear3.push({ 'x': "Nov", 'y': nov3 }) : nov3 = nov3;
+      dec3 != 0 ? timeYear3.push({ 'x': "Dec", 'y': dec3 }) : dec3 = dec3;
+      unknown3 != 0 ? timeYear3.push({ 'x': "Unk", 'y': unknown3 }) : unknown3 = unknown3;
 
+      barTimeYear.data = timeYear3;
+      barTimeYear.updateVis();
 
+      let Myxomycetes3 = 0;
+      let Sordariomycetes3 = 0;
+      let Agaricomycetes3 = 0;
+      let Ustilaginomycetes3 = 0;
+      let Tremellomycetes3 = 0;
+      let Taphrinomycetes3 = 0;
+      let Pucciniomycetes3 = 0;
+      let Dothideomycetes3 = 0;
+      let Myxogastrea3 = 0;
+      let Pezizomycetes3 = 0;
+      let Leotiomycetes3 = 0;
+      let Chytridiomycetes3 = 0;
+      let Oomycetes3 = 0;
+      let Lecanoromycetes3 = 0;
+      let Blastocladiomycetes3 = 0;
+      let Eurotiomycetes3 = 0;
+      let Orbiliomycetes3 = 0;
+      let Dacrymycetes3 = 0;
+      let Lichinomycetes3 = 0;
+      let Exobasidiomycetes3 = 0;
+      let unknown13 = 0;
 
+      let classs3 = [];
+
+      data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        switch (d.class) {
+          case 'Myxomycetes':
+            Myxomycetes3 = Myxomycetes3 + 1;
+            break;
+          case 'Sordariomycetes':
+            Sordariomycetes3 = Sordariomycetes3 + 1;
+            break;
+          case 'Agaricomycetes':
+            Agaricomycetes3 = Agaricomycetes3 + 1;
+            break;
+          case 'Ustilaginomycetes':
+            Ustilaginomycetes3 = Ustilaginomycetes3 + 1;
+            break;
+          case 'Tremellomycetes':
+            Tremellomycetes3 = Tremellomycetes3 + 1;
+            break;
+          case 'Taphrinomycetes':
+            Taphrinomycetes3 = Taphrinomycetes3 + 1;
+            break;
+          case 'Pucciniomycetes':
+            Pucciniomycetes3 = Pucciniomycetes3 + 1;
+            break;
+          case 'Pezizomycetes':
+            Pezizomycetes3 = Pezizomycetes3 + 1;
+            break;
+          case 'Dothideomycetes':
+            Dothideomycetes3 = Dothideomycetes3 + 1;
+            break;
+          case 'Myxogastrea':
+            Myxogastrea3 = Myxogastrea3 + 1;
+            break;
+          case 'Leotiomycetes':
+            Leotiomycetes3 = Leotiomycetes3 + 1;
+            break;
+          case 'Chytridiomycetes':
+            Chytridiomycetes3 = Chytridiomycetes3 + 1;
+            break;
+          case 'Oomycetes':
+            Oomycetes3 = Oomycetes3 + 1;
+            break;
+          case 'Lecanoromycetes':
+            Lecanoromycetes3 = Lecanoromycetes3 + 1;
+            break;
+          case 'Blastocladiomycetes':
+            Blastocladiomycetes3 = Blastocladiomycetes3 + 1;
+            break;
+          case 'Eurotiomycetes':
+            Eurotiomycetes3 = Eurotiomycetes3 + 1;
+            break;
+          case 'Orbiliomycetes':
+            Orbiliomycetes3 = Orbiliomycetes3 + 1;
+            break;
+          case 'Dacrymycetes':
+            Dacrymycetes3 = Dacrymycetes3 + 1;
+            break;
+          case 'Lichinomycetes':
+            Lichinomycetes3 = Lichinomycetes3 + 1;
+            break;
+          case 'Exobasidiomycetes':
+            Exobasidiomycetes3 = Exobasidiomycetes3 + 1;
+            break;
+          case "":
+            unknown13 = unknown13 + 1;
+            break;
+          default:
+            unknown13 = unknown13 + 1;
+            break;
+        }
+      });
+      Myxomycetes3 != 0 ? classs3.push({ 'x': "Myxomycetes", 'y': Myxomycetes3 }) : Myxomycetes3 = Myxomycetes3;
+      Sordariomycetes3 != 0 ? classs3.push({ 'x': "Sordariomycetes", 'y': Sordariomycetes3 }) : Sordariomycetes3 = Sordariomycetes3;
+      Agaricomycetes3 != 0 ? classs3.push({ 'x': "Agaricomycetes", 'y': Agaricomycetes3 }) : Agaricomycetes3 = Agaricomycetes3;
+      Ustilaginomycetes3 != 0 ? classs3.push({ 'x': "Ustilaginomycetes", 'y': Ustilaginomycetes3 }) : Ustilaginomycetes3 = Ustilaginomycetes3;
+      Tremellomycetes3 != 0 ? classs3.push({ 'x': "Tremellomycetes", 'y': Tremellomycetes3 }) : Tremellomycetes3 = Tremellomycetes3;
+      Taphrinomycetes3 != 0 ? classs3.push({ 'x': "Taphrinomycetes", 'y': Taphrinomycetes3 }) : Taphrinomycetes3 = Taphrinomycetes3;
+      Pucciniomycetes3 != 0 ? classs3.push({ 'x': "Pucciniomycetes", 'y': Pucciniomycetes3 }) : Pucciniomycetes3 = Pucciniomycetes3;
+      Pezizomycetes3 != 0 ? classs3.push({ 'x': "Pezizomycetes", 'y': Pezizomycetes3 }) : Pezizomycetes3 = Pezizomycetes3;
+      Dothideomycetes3 != 0 ? classs3.push({ 'x': "Dothideomycetes", 'y': Dothideomycetes3 }) : Dothideomycetes3 = Dothideomycetes3;
+      Myxogastrea3 != 0 ? classs3.push({ 'x': "Myxogastrea", 'y': Myxogastrea3 }) : Myxogastrea3 = Myxogastrea3;
+      Leotiomycetes3 != 0 ? classs3.push({ 'x': "Leotiomycetes", 'y': Leotiomycetes3 }) : Leotiomycetes3 = Leotiomycetes3;
+      Chytridiomycetes3 != 0 ? classs3.push({ 'x': "Chytridiomycetes", 'y': Chytridiomycetes3 }) : Chytridiomycetes3 = Chytridiomycetes3;
+      Oomycetes3 != 0 ? classs3.push({ 'x': "Oomycetes", 'y': Oomycetes3 }) : Oomycetes3 = Oomycetes3;
+      Lecanoromycetes3 != 0 ? classs3.push({ 'x': "Lecanoromycetes", 'y': Lecanoromycetes3 }) : Lecanoromycetes3 = Lecanoromycetes3;
+      Blastocladiomycetes3 != 0 ? classs3.push({ 'x': "Blastocladiomycetes", 'y': Blastocladiomycetes3 }) : Blastocladiomycetes3 = Blastocladiomycetes3;
+      Eurotiomycetes3 != 0 ? classs3.push({ 'x': "Eurotiomycetes", 'y': Eurotiomycetes3 }) : Eurotiomycetes3 = Eurotiomycetes3;
+      Orbiliomycetes3 != 0 ? classs3.push({ 'x': "Orbiliomycetes", 'y': Orbiliomycetes3 }) : Orbiliomycetes3 = Orbiliomycetes3;
+      Dacrymycetes3 != 0 ? classs3.push({ 'x': "Dacrymycetes", 'y': Dacrymycetes3 }) : Dacrymycetes3 = Dacrymycetes3;
+      Lichinomycetes3 != 0 ? classs3.push({ 'x': "Lichinomycetes", 'y': Lichinomycetes3 }) : Lichinomycetes3 = Lichinomycetes3;
+      Exobasidiomycetes3 != 0 ? classs3.push({ 'x': "Exobasidiomycetes", 'y': Exobasidiomycetes3 }) : Exobasidiomycetes3 = Exobasidiomycetes3;
+      unknown13 != 0 ? classs3.push({ 'x': "unknown", 'y': unknown13 }) : unknown13 = unknown13;
+      barClasss.data = classs3;
+      barClasss.updateVis();
 
       keysAll13 = [];
       data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
@@ -836,7 +1028,7 @@ function dimChange() {
       let yes13 = 0;
       let no13 = 0;
       data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
-        console.log(d.decimalLatitude);
+        // console.log(d.decimalLatitude);
         if (d.eventDate == "") {
           no13 += 1;
         }
@@ -847,7 +1039,7 @@ function dimChange() {
       yes13 != 0 ? withEventDate3.push({ 'key': 'Yes', 'value': yes13 }) : yes13 = yes13;
       no13 != 0 ? withEventDate3.push({ 'key': 'No', 'value': no13 }) : no13 = no13;
       pieEvent.data = withEventDate3;
-      console.log(pieEvent.data);
+      // console.log(pieEvent.data);
       pieEvent.updateVis();
     });
 }
