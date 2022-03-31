@@ -775,7 +775,44 @@ function dimChange() {
 
 
 
+      keysAll13 = [];
+      data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        keysAll13.push(d.recordedBy);
+      });
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+      keys13 = keysAll13.filter(onlyUnique);
+      // Initialize chart and then show it
+      let redorder3 = [];
+      for (let i = 0; i < keys1.length; i++) {
+        let count3 = 0;
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+          if (keys13[i] == d.recordedBy) {
+            count3 += 1;
+          }
+        });
 
+        if (redorder3.length < 10) {
+          redorder3.push({ 'x': keys13[i], 'y': count3 })
+        } else {
+          let miin3 = 100000;
+          let index3 = 0;
+          for (let k = 0; k < redorder3.length; k++) {
+            if (miin3 > redorder3[k].x) {
+              miin3 = redorder3[k].x;
+              index3 = k;
+            }
+          }
+          if (miin3 < count3) {
+            redorder3.splice(index3, 1)
+            redorder3.push({ 'x': keys13[i], 'y': count3 })
+
+          }
+        }
+      }
+      barRecordedBy.data = redorder3;
+      barRecordedBy.updateVis();
 
       let withCoords3 = [];
       let yes3 = 0;
