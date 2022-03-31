@@ -58,7 +58,9 @@ class LeafletMap {
       .interpolator(d3.interpolateViridis);
 
     vis.theMap.on('areaselected', (e) => {
-      console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+     // console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      //console.log(e.bounds); // lon, lat, lon, lat
+
       var node = document.getElementById('box_dims');
       var newNode = document.createElement('p');
 
@@ -70,7 +72,7 @@ class LeafletMap {
 
       node.onchange();
     });
-    console.log(vis.coords);
+   // console.log(vis.coords);
 
     // You can restrict selection area like this:
     const bounds = vis.theMap.getBounds().pad(-0.25); // save current map bounds as restriction area
@@ -225,10 +227,10 @@ class LeafletMap {
 
   bounders(param) {
     let vis = this;
-    console.log(param + "zz");
+    //console.log(param + "zz");
 
     vis.coords = param;
-    console.log(vis.coords);
+    //console.log(vis.coords);
   }
 
 

@@ -1,12 +1,11 @@
-
-
-let maxYear = 0;
-let minYear = 100;
-let lat1;
-let long1;
-let lat2;
-let leafletMap;
-let long2;
+let maxYear = 1;
+let minYear = 0;
+let north = 90;
+let south = -90;
+let east = 180;
+let west = -180;
+//north > south
+//east > west
 d3.csv('data/worldcities.csv')
 d3.csv('data/data-sample2.csv')//updted the data
   .then(data => {
@@ -409,7 +408,6 @@ d3.csv('data/data-sample2.csv')//updted the data
       colorBy: 'year'
     }, data);
     // leafletMap.bounders();
-    console.log('emma')
 
     let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data);
     focusContextVis.updateVis();
@@ -425,6 +423,18 @@ function yearChange() {
 
   d3.csv('data/data-sample2.csv')
     .then(data => {
+      data.forEach(d => {
+        if (d.decimalLatitude == "null" || d.decimalLongitude == "null" || d.year == "null") {
+          d.latitude = 99999999999999;
+          d.longitude = 99999999999999;
+          d.year = null;
+        }
+        else {
+          d.latitude = +d.decimalLatitude; //make sure these are not strings
+          d.longitude = +d.decimalLongitude; //make sure these are not strings
+          d.year = +d.year;
+        }
+      });
       let years;
       let dd = document.getElementById('colors').value
 
@@ -452,8 +462,13 @@ function yearChange() {
         let dec1 = 0;
         let unknown2 = 0;
 
+        // north = dimensions[3];//lat
+        // south = dimensions[1];//lat
+        // east = dimensions[2];//long
+        // west = dimensions[0];//long
         let timeYear1 = []
-        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
           d.year = +d.year;
           switch (d.month) {
             case '1':
@@ -541,7 +556,8 @@ function yearChange() {
         let unknown12 = 0;
 
         let classs1 = [];
-        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
           switch (d.class) {
             case 'Myxomycetes':
               Myxomycetes1 = Myxomycetes1 + 1;
@@ -636,7 +652,7 @@ function yearChange() {
         barClasss.updateVis();
 
         keysAll12 = [];
-        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
           keysAll12.push(d.recordedBy);
         });
         function onlyUnique(value, index, self) {
@@ -647,7 +663,7 @@ function yearChange() {
         let redorder2 = [];
         for (let i = 0; i < keys1.length; i++) {
           let count2 = 0;
-          data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+          data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
             if (keys12[i] == d.recordedBy) {
               count2 += 1;
             }
@@ -677,7 +693,7 @@ function yearChange() {
         let withCoords2 = [];
         let yes2 = 0;
         let no2 = 0;
-        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
 
           if (d.decimalLatitude == "" || d.decimalLongitude == "") {
             no2 += 1;
@@ -695,7 +711,8 @@ function yearChange() {
         let withEventDate2 = [];
         let yes12 = 0;
         let no12 = 0;
-        data.filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+        data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
 
           if (d.eventDate == "") {
             no12 += 1;
@@ -716,17 +733,86 @@ function yearChange() {
 
 function dimChange() {
   d3.csv('data/data-sample2.csv')
-  .then(data => {
+    .then(data => {
+      data.forEach(d => {
+        if (d.decimalLatitude == "null" || d.decimalLongitude == "null" || d.year == "null") {
+          d.decimalLatitude = 99999999999999;
+          d.decimalLongitude = 99999999999999;
+          d.year = null;
+        }
+        else {
+          d.decimalLatitude = +d.decimalLatitude; //make sure these are not strings
+          d.decimalLongitude = +d.decimalLongitude; //make sure these are not strings
+          d.year = +d.year;
+        }
+      });
+      var node = document.getElementById('box_vals');
+      //an array of the years we want to filter
+      dimensions = node.innerHTML.split(',')
+      console.log(dimensions)
 
-    var node = document.getElementById('box_vals');
-    //an array of the years we want to filter
-    dimensions = node.innerHTML.split(',')
-    console.log(dimensions)
+      //TODO: EMMA - do your thing
+      north = dimensions[3];//lat
+      north = +north;
+      south = dimensions[1];//lat
+      south = +south;
+      east = dimensions[2];//long
+      east = +east;
+      west = dimensions[0];//long
+      west = +west;
+      if (minYear>maxYear){
+        minYear = 0;
+        maxYear = 10000;
+      }
+      //console.log(typeof north);
+      // console.log(south);
+      // console.log(east);
+      // console.log(west);
 
-    //TODO: EMMA - do your thing
 
 
-  });
+
+
+
+
+
+
+      let withCoords3 = [];
+      let yes3 = 0;
+      let no3 = 0;
+      data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+
+        if (d.decimalLatitude == "" || d.decimalLongitude == "") {
+          no3 += 1;
+        }
+        else {
+          yes3 += 1;
+        }
+      });
+      yes3 != 0 ? withCoords3.push({ 'key': 'Yes', 'value': yes3 }) : yes3 = yes3;
+      no3 != 0 ? withCoords3.push({ 'key': 'No', 'value': no3 }) : no3 = no3;
+
+      pieCoords.data = withCoords3;
+      pieCoords.updateVis();
+
+      let withEventDate3 = [];
+      let yes13 = 0;
+      let no13 = 0;
+      data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
+        console.log(d.decimalLatitude);
+        if (d.eventDate == "") {
+          no13 += 1;
+        }
+        else {
+          yes13 += 1;
+        }
+      });
+      yes13 != 0 ? withEventDate3.push({ 'key': 'Yes', 'value': yes13 }) : yes13 = yes13;
+      no13 != 0 ? withEventDate3.push({ 'key': 'No', 'value': no13 }) : no13 = no13;
+      pieEvent.data = withEventDate3;
+      console.log(pieEvent.data);
+      pieEvent.updateVis();
+    });
 }
 //second dropdown changes on making changes in the first one
 function configureDropDownLists(ddl1, ddl2) {
@@ -751,7 +837,6 @@ function configureDropDownLists(ddl1, ddl2) {
 
 
 }
-
 
 function createOption(ddl, text, value) {
   var opt = document.createElement('option');

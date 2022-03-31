@@ -7,7 +7,7 @@ class BarChart {
             margin: { top: 10, bottom: 30, right: 50, left: 50 }
         }
         this.data = _data;
-        console.log(this.data);
+        //console.log(this.data);
         //console.log(this.data2);
         // Call a class function
         this.ylabel;
@@ -16,7 +16,7 @@ class BarChart {
     }
     initVis() {
         let vis = this;
-        console.log(vis.data);
+        //console.log(vis.data);
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
 
