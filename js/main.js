@@ -35,6 +35,7 @@ d3.csv('data/data-sample2.csv')//updted the data
     let dec = 0;
     let unknown = 0;
 
+    let yearCount = []
     let timeYear = []
     data.forEach(d => {
       switch (d.month) {
@@ -81,7 +82,19 @@ d3.csv('data/data-sample2.csv')//updted the data
           unknown = unknown + 1;
           break;
       }
-    })
+      if (!yearCount[d.year]){
+        yearCount[d.year] = 0;
+      }
+      yearCount[d.year] += 1;
+    }
+    )
+    let yearvals = []
+
+    for(var k in yearCount){
+      if (yearCount.hasOwnProperty(k) & (k != 0)){
+          yearvals.push({'x': k, 'y': yearCount[k]})
+      }
+    }
 
     timeYear.push({ 'x': "Jan", 'y': jan });
     timeYear.push({ 'x': "Feb", 'y': feb });
@@ -409,7 +422,7 @@ d3.csv('data/data-sample2.csv')//updted the data
     }, data);
     // leafletMap.bounders();
 
-    let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data);
+    let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data, yearvals);
     focusContextVis.updateVis();
     let focusContextVis2 = new FocusContextVis({ parentElement: '#chart_days', limits: '0, 365' }, data);
     focusContextVis2.updateVis();

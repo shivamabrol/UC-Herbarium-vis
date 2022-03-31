@@ -5,7 +5,7 @@ class FocusContextVis {
    * @param {Object}
    * @param {Array}
    */
-  constructor(_config, _data) {
+  constructor(_config, _data, _bardata = NaN) {
     this.config = {
       parentElement: _config.parentElement,
       width: 800,
@@ -16,6 +16,7 @@ class FocusContextVis {
       limits: _config.limits
     }
     this.data = _data;
+    this.bardata = _bardata;
     this.initVis();
   }
 
@@ -116,6 +117,11 @@ class FocusContextVis {
       .on('end', function ({ selection }) {
         if (!selection) vis.brushed(null);
       });
+    
+    vis.chart = vis.svg.append('g')
+      .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+
+    vis.tp = '#tooltipBarChart1';
   }
 
   /**
@@ -126,6 +132,19 @@ class FocusContextVis {
 
     vis.xValue = d => d.year;
     vis.yValue = d => d.year;
+
+    vis.xScale = d3
+      .scaleBand()
+      .range([0, vis.config.width])
+      .domain(vis.bardata.map(function (d) { return d.x; }))
+      .paddingInner(0.2)
+      .paddingOuter(0.2);
+    vis.yScale = d3
+      .scaleLinear()
+      .range([vis.config.height, 0])
+      .domain([0, 1200]);
+
+    console.log(vis.xScale.bandwidth())
 
     // Initialize line and area generators
     // vis.line = d3.line()
@@ -142,6 +161,38 @@ class FocusContextVis {
     // vis.yScaleFocus.domain(d3.extent(vis.data, vis.yValue));
     // vis.xScaleContext.domain(vis.xScaleFocus.domain());
     // vis.yScaleContext.domain(vis.yScaleFocus.domain());
+
+    vis.chart.selectAll('.bar')
+            .data(vis.bardata)
+            .enter()
+            .append('rect')
+            .attr("class", "bar")
+            .attr('fill', d3.color('blue'))
+            .attr('x', (s) => vis.xScale(s.x))
+            .attr('y', (s) => vis.yScale(s.y) + 80)
+            .attr('height', (s) => vis.config.height - vis.yScale(s.y))
+            .attr('width', vis.xScale.bandwidth())
+            .on('mouseover', function (event, d) { 
+        
+                //create a tool tip
+                d3.select('#tooltip')
+                  .style('opacity', 1)
+                  .style('z-index', 1000000)
+                  .html(`
+                  <div class="tooltip-title">Key: ${d.x}</div>
+                  <ul>
+                    <li> Value: ${d.y}</li>
+
+                  </ul>
+                `);
+       
+              })
+              .on('mousemove', (event) => {
+                //position the tooltip
+                d3.select('#tooltip')
+                  .style('left', (event.pageX + 10) + 'px')
+                  .style('top', (event.pageY + 10) + 'px');
+              })
 
     vis.bisectDate = d3.bisector(vis.xValue).left;
 
