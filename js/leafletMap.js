@@ -48,17 +48,45 @@ class LeafletMap {
       ext: 'png'
     });
 
+
+    var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
+      thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+
+    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      osmAttrib = '&copy; ' + osmLink + ' Contributors',
+      landUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+      thunAttrib = '&copy; ' + osmLink + ' Contributors & ' + thunLink;
+
+    var osmMap = L.tileLayer(osmUrl, { attribution: osmAttrib }),
+      landMap = L.tileLayer(landUrl, { attribution: thunAttrib }),
+      topoMap = L.tileLayer(vis.topoUrl, { attribution: vis.topoAttr }),
+      thOutMap = L.tileLayer(vis.thOutUrl, { attribution: vis.thOutAttr }),
+      stMap = L.tileLayer(vis.stUrl, { attribution: vis.stAttr });
+
+    var baseLayers = {
+      "OSM Mapnik": osmMap,
+      "Landscape": landMap,
+      "Topological": topoMap,
+      "Thunderforest": thOutMap,
+      "Stamen": stMap
+    };
+
+
+
     vis.theMap = L.map('my-map', {
       center: [30, 0],
       zoom: 2,
       selectArea: true,
       layers: [vis.base_layer]
     });
+
+    L.control.layers(baseLayers).addTo(vis.theMap);
+
     vis.colorScale = d3.scaleSequential()
       .interpolator(d3.interpolateViridis);
 
     vis.theMap.on('areaselected', (e) => {
-     // console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      // console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
       //console.log(e.bounds); // lon, lat, lon, lat
 
       var node = document.getElementById('box_dims');
@@ -72,7 +100,7 @@ class LeafletMap {
 
       node.onchange();
     });
-   // console.log(vis.coords);
+    // console.log(vis.coords);
 
     // You can restrict selection area like this:
     const bounds = vis.theMap.getBounds().pad(-0.25); // save current map bounds as restriction area
@@ -249,9 +277,9 @@ class LeafletMap {
       .interpolator(d3.interpolateViridis);
 
     vis.theMap.on('areaselected', (e) => {
-       //console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
+      //console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
       vis.coords = e.bounds.toBBoxString();
-      
+
     });
 
     //console.log(LeafletMap.beta);
