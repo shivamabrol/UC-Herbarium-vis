@@ -750,6 +750,13 @@ function dimChange() {
       //an array of the years we want to filter
       dimensions = node.innerHTML.split(',')
       console.log(dimensions)
+      //TODO: Shivam - leaflet stuff
+      let dd = document.getElementById('colors').value
+
+
+      leafletMap.renderVis({ 'type': 'dimension',
+                              'dim':dimensions}, dd);
+
 
       //TODO: EMMA - do your thing
       north = dimensions[3];//lat

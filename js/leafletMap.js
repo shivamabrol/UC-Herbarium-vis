@@ -261,6 +261,25 @@ class LeafletMap {
       data = data.filter(d => d.year >= param[0]);
       data = data.filter(d => d.year <= param[1]);
     }
+
+    if (param.type == 'dimension') {
+      console.log(param.dim + 'val found');
+      let north = 90;
+      let south = -90;
+      let east = 180;
+      let west = -180;
+      north = param.dim[3];//lat
+      north = +north;
+      south = param.dim[1];//lat
+      south = +south;
+      east = param.dim[2];//long
+      east = +east;
+      west = param.dim[0];//long
+      west = +west;
+
+
+      data = data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west)
+    }
     switch (color) {
       case 'year':
         vis.colorScale = d3.scaleSequential()
