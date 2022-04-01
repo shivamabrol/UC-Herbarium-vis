@@ -183,7 +183,7 @@ class LeafletMap {
           .style('opacity', 1)
           .style('z-index', 1000000)
           // Format number with million and thousand separator
-          .html(`<div class="tooltip-label">Name: ${d.scientificName},  ${d.county}</div>`);
+          .html(`<div class="tooltip-label">Name: ${d.scientificName},  ${d.county}  <br> Location:  ${d.decimalLatitude}, ${d.decimalLongitude}</div>`);
 
       })
       .on('mousemove', (event) => {
@@ -370,13 +370,13 @@ class LeafletMap {
           .style('opacity', 1)
           .style('z-index', 1000000)
           // Format number with million and thousand separator
-          .html(`<div class="tooltip-label">Name: ${d.scientificName},  ${d.county}</div>`);
+          .html(`<div class="tooltip-label">Name: ${d.scientificName},  ${d.county}  <br> Location:  ${d.decimalLatitude}, ${d.decimalLongitude}</div>`);
 
       })
       .on('mousemove', (event) => {
         //position the tooltip
         d3.select('#tooltip')
-          .style('left', (event.pageX + 10) + 'px')
+          .style('left', (event.pageX + 100) + 'px')
           .style('top', (event.pageY + 10) + 'px');
       })
       .on('mouseleave', function () { //function to add mouseover event
