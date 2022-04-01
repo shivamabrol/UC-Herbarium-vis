@@ -424,6 +424,26 @@ d3.csv('data/data-sample2.csv')//updted the data
 
     let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data, yearvals);
     focusContextVis.updateVis();
+
+    focusContextVis.svg.append("text")
+      // .attr("class", "y 5abel")
+      .attr("text-anchor", "middle")
+      .attr("x", (focusContextVis.config.width / 2) + 50)
+      .attr("y", 365)
+      .text('Year');
+    focusContextVis.svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -(focusContextVis.config.height / 2))
+      .attr("y", 15)
+      .style("text-anchor", "middle")
+      .text('Specimens collected');
+    focusContextVis.svg.append("text")
+      .attr("x", focusContextVis.config.width / 2 + 50)
+      .attr("y", 15)
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .text('Specimens Collected Yearly');
+
     let focusContextVis2 = new FocusContextVis({ parentElement: '#chart_days', limits: '0, 365' }, data);
     focusContextVis2.updateVis();
   })
