@@ -762,7 +762,7 @@ function dimChange() {
       var node = document.getElementById('box_vals');
       //an array of the years we want to filter
       dimensions = node.innerHTML.split(',')
-      console.log(dimensions)
+      // console.log(dimensions)
       //TODO: Shivam - leaflet stuff
       let dd = document.getElementById('colors').value
 

@@ -144,7 +144,7 @@ class FocusContextVis {
       .range([vis.config.height, 0])
       .domain([0, 1200]);
 
-    console.log(vis.xScale.bandwidth())
+    // console.log(vis.xScale.bandwidth())
 
     // Initialize line and area generators
     // vis.line = d3.line()
