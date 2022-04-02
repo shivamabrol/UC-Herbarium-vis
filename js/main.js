@@ -4,7 +4,6 @@ let north = 90;
 let south = -90;
 let east = 180;
 let west = -180;
-let focusContextVis;
 
 //north > south
 //east > west
@@ -886,13 +885,6 @@ function dimChange() {
         }
       })
 
-      
-      if (!yearcountloc[2020]){
-        yearcountloc[2020] = 0;
-      }
-
-      yearcountloc[1820] = 0;
-
       let yearvalsloc = []
 
       for(var k in yearcountloc){
@@ -902,7 +894,7 @@ function dimChange() {
       }
 
       focusContextVis.bardata = yearvalsloc;
-      focusContextVis.updateVis();
+      focusContextVis.updateBarVis();
 
       jan3 != 0 ? timeYear3.push({ 'x': "Jan", 'y': jan3 }) : jan3 = jan3;
       feb3 != 0 ? timeYear3.push({ 'x': "Feb", 'y': feb3 }) : feb3 = feb3;

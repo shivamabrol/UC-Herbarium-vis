@@ -127,6 +127,66 @@ class FocusContextVis {
   /**
    * Prepare the data and scales before we render it.
    */
+  updateBarVis(){
+    let vis = this;
+
+    vis.xValue = d => d.year;
+    vis.yValue = d => d.year;
+
+    var list = [];
+    for (var i = 1820; i <= 2020; i++) {
+      list.push(i);
+    }
+
+    vis.xScale = d3
+      .scaleBand()
+      .range([0, vis.config.width])
+      .domain(list)
+      .paddingInner(0.2)
+      .paddingOuter(0.2);
+    vis.yScale = d3
+      .scaleLinear()
+      .range([vis.config.height, 0])
+      .domain([0, 1200]);
+
+      
+    vis.chart.selectAll('.bar')
+      .data([])
+      .exit().remove();
+
+    vis.chart.selectAll('.bar')
+    .data(vis.bardata)
+    .enter()
+    .append('rect')
+    .attr("class", "bar")
+    .attr('fill', d3.color('blue'))
+    .attr('x', (s) => vis.xScale(s.x))
+    .attr('y', (s) => vis.yScale(s.y) + 80)
+    .attr('height', (s) => vis.config.height - vis.yScale(s.y))
+    .attr('width', vis.xScale.bandwidth())
+    .on('mouseover', function (event, d) { 
+
+        //create a tool tip
+        d3.select('#tooltip')
+          .style('opacity', 1)
+          .style('z-index', 1000000)
+          .html(`
+          <div class="tooltip-title">Key: ${d.x}</div>
+          <ul>
+            <li> Value: ${d.y}</li>
+
+          </ul>
+        `);
+
+      })
+      .on('mousemove', (event) => {
+        //position the tooltip
+        d3.select('#tooltip')
+          .style('left', (event.pageX + 10) + 'px')
+          .style('top', (event.pageY + 10) + 'px');
+      })
+  }
+
   updateVis() {
     let vis = this;
 

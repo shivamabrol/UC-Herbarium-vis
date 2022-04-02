@@ -58,15 +58,9 @@ class HorzBarChart {
             vis.updateVis();
     }
 
-    updateVis() {
-
-        vis.chart.selectAll('*')
-            .data([])
-            .exit().remove();
-            
-        let vis = this
-
+    updateVis() {    
         
+        let vis = this
         vis.chart.selectAll('.bar')
             .data(vis.data)
             .enter()
