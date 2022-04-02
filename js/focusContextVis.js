@@ -133,10 +133,15 @@ class FocusContextVis {
     vis.xValue = d => d.year;
     vis.yValue = d => d.year;
 
+    var list = [];
+    for (var i = 1820; i <= 2020; i++) {
+      list.push(i);
+    }
+
     vis.xScale = d3
       .scaleBand()
       .range([0, vis.config.width])
-      .domain(vis.bardata.map(function (d) { return d.x; }))
+      .domain(list)
       .paddingInner(0.2)
       .paddingOuter(0.2);
     vis.yScale = d3
@@ -144,6 +149,10 @@ class FocusContextVis {
       .range([vis.config.height, 0])
       .domain([0, 1200]);
 
+      
+    vis.chart.selectAll('.bar')
+      .data([])
+      .exit().remove();
     // console.log(vis.xScale.bandwidth())
 
     // Initialize line and area generators

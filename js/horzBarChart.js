@@ -60,7 +60,10 @@ class HorzBarChart {
 
     updateVis() {
 
-
+        vis.chart.selectAll('*')
+            .data([])
+            .exit().remove();
+            
         let vis = this
 
         

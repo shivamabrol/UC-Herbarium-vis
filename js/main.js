@@ -4,6 +4,8 @@ let north = 90;
 let south = -90;
 let east = 180;
 let west = -180;
+let focusContextVis;
+
 //north > south
 //east > west
 d3.csv('data/worldcities.csv')
@@ -88,10 +90,14 @@ d3.csv('data/data-sample2.csv')//updted the data
       yearCount[d.year] += 1;
     }
     )
+
+    yearCount[2020] = 0;
+    yearCount[1820] = 0;
+
     let yearvals = []
 
     for(var k in yearCount){
-      if (yearCount.hasOwnProperty(k) & (k != 0)){
+      if (yearCount.hasOwnProperty(k) & (k != NaN)){
           yearvals.push({'x': k, 'y': yearCount[k]})
       }
     }
@@ -422,7 +428,7 @@ d3.csv('data/data-sample2.csv')//updted the data
     }, data);
     // leafletMap.bounders();
 
-    let focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data, yearvals);
+    focusContextVis = new FocusContextVis({ parentElement: '#chart_year', limits: '1820, 2020' }, data, yearvals);
     focusContextVis.updateVis();
 
     focusContextVis.svg.append("text")
@@ -823,9 +829,17 @@ function dimChange() {
       let dec3 = 0;
       let unknown3 = 0;
       let timeYear3 = []
+      let yearcountloc = []
 
       data.filter(d => d.decimalLatitude <= north).filter(d => d.decimalLatitude >= south).filter(d => d.decimalLongitude <= east && d.decimalLongitude >= west).filter(d => d.year < maxYear + 1).filter(d => d.year > minYear - 1).forEach(d => {
         d.year = +d.year;
+
+        if(!yearcountloc[d.year]){
+          yearcountloc[d.year] = 0;
+        }
+
+        yearcountloc[d.year] += 1;
+
         switch (d.month) {
           case '1':
             jan3 = jan3 + 1;
@@ -871,6 +885,24 @@ function dimChange() {
             break;
         }
       })
+
+      
+      if (!yearcountloc[2020]){
+        yearcountloc[2020] = 0;
+      }
+
+      yearcountloc[1820] = 0;
+
+      let yearvalsloc = []
+
+      for(var k in yearcountloc){
+        if (yearcountloc.hasOwnProperty(k) & (k != NaN)){
+            yearvalsloc.push({'x': k, 'y': yearcountloc[k]})
+        }
+      }
+
+      focusContextVis.bardata = yearvalsloc;
+      focusContextVis.updateVis();
 
       jan3 != 0 ? timeYear3.push({ 'x': "Jan", 'y': jan3 }) : jan3 = jan3;
       feb3 != 0 ? timeYear3.push({ 'x': "Feb", 'y': feb3 }) : feb3 = feb3;
